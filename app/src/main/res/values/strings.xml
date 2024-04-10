@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">FallDetection</string>
+    <string name="app_name_upper_case">PHÁT HIỆN TÉ NGÃ</string>
+    <string name="desc_login_image">Login Image</string>
+    <string name="txt_login_mobile_username">Email hoặc Tên người dùng</string>
+    <string name="txt_password">Mật khẩu</string>
+    <string name="txt_forget_password_ask">Quên mật khẩu?</string>
+    <string name="txt_sign_in">Đăng nhập</string>
+    <string name="txt_sign_up">Đăng ký</string>
+    <string name="txt_dont_have_an_account">Chưa có tài khoản?</string>
+    <string name="txt_have_an_account">Bạn đã có tài khoản?</string>
+    <string name="txt_sign_up_here">Đăng ký tại đây</string>
+    <string name="txt_sign_in_here">Đăng nhập tại dây</string>
+    <string name="txt_confirm_password">Xác nhận mật khẩu</string>
+    <string name="txt_dangerous">KHẨN CẤP</string>
+    <string name="txt_someone_has_fallen">Đã phát hiện Trương Thoại Vỹ bị ngã</string>
+    <string name="txt_cancel_alert">Tắt thông báo</string>
+    <string name="txt_view_detail">Xem thông tin chi tiết</string>
+    <string name="txt_where">Tại: 54 Nguyễn Lương Bằng, Liên Chiểu, Hòa Khánh Bắc, Đà Nẵng</string>
+    <string name="txt_confirm_email">Xác nhận email</string>
+    <string name="txt_enter_email">Nhập email</string>
+    <string name="txt_forget_password">Quên mật khẩu</string>
+    <string name="txt_turn_back">Quay lại</string>
+    <string name="txt_confirm_verification_code">Xác nhận mã xác thực</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_home">Trang chủ</string>
+    <string name="title_detail">Lịch sử quan sát</string>
+    <string name="title_register">Theo dõi</string>
+    <string name="title_setting">Cài đặt</string>
+    <string name="action_search">Tìm kiếm</string>
+    <string name="title_item_sort">Sắp xếp</string>
+    <string name="action_item_profile">Tài khoản</string>
+    <string name="msg_fragment_detail">Fragment Detail</string>
+    <string name="txt_profile_full_name">Họ tên: Nguyễn Văn A</string>
+    <string name="txt_profile_email">Email: vanaday@gmail.com</string>
+    <string name="txt_profile_birth_date">Ngày sinh: 01/01/2003</string>
+    <string name="txt_profile_phone">Số điện thoại: 0853331369</string>
+    <string name="txt_profile_gender">Giới tính: Nam</string>
+    <string name="des_avatar">Avatar image</string>
+    <string name="des_btn_more">more dsc</string>
+    <string name="txt_user_email">nguyenvana@gmail.com</string>
+    <string name="txt_user_full_name">Nguyễn Văn A</string>
+    <string name="label_new_registration">Đăng ký theo dõi</string>
+    <string name="label_pick_your_avatar">Chọn ảnh đại diện</string>
+    <string name="action_add">Đăng ký</string>
+    <string name="action_clear">Hủy</string>
+    <string name="hint_enter_remenber_name">Nhập tên gợi nhớ</string>
+    <string name="hint_enter_device_code">Nhập mã máy</string>
+    <string name="des_avatar_image_picker">Des avatar image picker</string>
+    <string name="action_update">Cập nhật</string>
+    <string name="item_text_notifications">Thông báo</string>
+    <string name="action_logout">Đăng xuất</string>
+    <string name="des_ba_icon">Des ba icon</string>
+    <string name="asset_statements">statement</string>
+</resources>
+

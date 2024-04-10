@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_register"
+    android:label="@string/title_register"
+    app:startDestination="@id/register_fragment">
+
+    <fragment
+        android:id="@+id/register_fragment"
+        android:name="com.example.falldetection.ui.register.RegisterFragment"
+        android:label="@string/title_register"
+        tools:layout="@layout/fragment_register" />
+    <action
+        android:id="@+id/action_global_register_fragment"
+        app:destination="@id/register_fragment"
+        app:popUpTo="@id/register_fragment" />
+</navigation>
