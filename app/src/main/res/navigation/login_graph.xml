@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/login_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.falldetection.ui.login.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_requireValidationFragment"
+            app:destination="@id/requireValidationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.falldetection.ui.signup.SignUpFragment"
+        android:label="SignUpFragment" >
+        <action
+            android:id="@+id/action_signUpFragment_to_verificationCodeFragment"
+            app:destination="@id/verificationCodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/requireValidationFragment"
+        android:name="com.example.falldetection.ui.forget_password.ForgetPasswordFragment"
+        android:label="RequireValidationFragment">
+        <action
+            android:id="@+id/action_forgetPassword_to_verificationCodeFragment"
+            app:destination="@id/verificationCodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/verificationCodeFragment"
+        android:name="com.example.falldetection.ui.verify_code.VerificationCodeFragment"
+        android:label="VerificationCodeFragment" />
+    <action android:id="@+id/action_global_loginFragment" app:destination="@id/loginFragment" />
+</navigation>
