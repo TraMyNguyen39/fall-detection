@@ -8,6 +8,7 @@
         <item name="background">@color/white</item>
         <item name="android:statusBarColor">@color/black</item>
         <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:colorForegroundInverse">@color/black</item>
     </style>
 
     <style name="Theme.FallDetection" parent="Base.Theme.FallDetection" />

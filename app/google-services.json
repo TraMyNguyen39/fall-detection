@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "741268065300",
+    "firebase_url": "https://falling-detection-3e200-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "falling-detection-3e200",
+    "storage_bucket": "falling-detection-3e200.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741268065300:android:1106f74bea68b0823cab01",
+        "android_client_info": {
+          "package_name": "com.example.falldetection"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAccaCmqGizPKOgVDGMk6I1FL7-P4vDSxk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
