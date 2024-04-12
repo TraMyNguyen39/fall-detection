@@ -9,4 +9,5 @@
     <color name="stroke">#C1C1C1</color>
     <color name="text_color">#111111</color>
     <color name="active_background_color">#C5F8FF</color>
+    <color name="grey">#c3c3c3</color>
 </resources>
