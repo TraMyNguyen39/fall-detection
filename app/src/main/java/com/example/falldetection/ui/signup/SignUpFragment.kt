@@ -127,7 +127,7 @@ class SignUpFragment : Fragment() {
                 ).show()
             }
 
-            if (it == R.string.txt_check_your_email) {
+            if (it == R.string.txt_check_your_email_signup) {
                 navController.navigate(SignUpFragmentDirections.actionGlobalLoginFragment())
             }
 
