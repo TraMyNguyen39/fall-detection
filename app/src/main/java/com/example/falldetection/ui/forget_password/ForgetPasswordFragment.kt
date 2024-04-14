@@ -101,7 +101,7 @@ class ForgetPasswordFragment : Fragment() {
             ).show()
 
             if (it == R.string.txt_check_your_email) {
-                navController.navigate(SignUpFragmentDirections.actionGlobalLoginFragment())
+                navController.navigate(ForgetPasswordFragmentDirections.actionGlobalLoginFragment())
             }
 
             progressBar.visibility = View.GONE
