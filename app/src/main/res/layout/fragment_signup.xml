@@ -32,7 +32,7 @@
         app:startIconDrawable="@drawable/ic_email">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_signup_mobile_username"
+            android:id="@+id/edit_signup_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -85,7 +85,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btn_sign_in"
+        android:id="@+id/btn_signup_fragment_signup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_32"
@@ -105,14 +105,14 @@
         android:layout_marginTop="@dimen/margin_24"
         android:text="@string/txt_have_an_account"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/btn_sign_up"
+        app:layout_constraintEnd_toStartOf="@+id/btn_signup_fragment_login"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_sign_in" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_signup_fragment_signup" />
 
     <Button
-        android:id="@+id/btn_sign_up"
+        android:id="@+id/btn_signup_fragment_login"
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

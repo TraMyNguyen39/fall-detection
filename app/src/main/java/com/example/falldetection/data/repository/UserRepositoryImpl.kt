@@ -5,9 +5,8 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.Filter
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.tasks.await
 
 class UserRepositoryImpl(
@@ -33,6 +32,11 @@ class UserRepositoryImpl(
     override fun logout() {
         auth.signOut()
     }
+
+    override fun sendPasswordResetEmail(email: String): Task<Void> {
+        return auth.sendPasswordResetEmail(email)
+    }
+
     override suspend fun getUserByEmail(email: String): User? {
         return try {
             val querySnapshot = database.collection("supervisor")
@@ -51,6 +55,14 @@ class UserRepositoryImpl(
             println("Error getting user: $e")
             null
         }
+    }
+
+    override fun addNewUser(email: String) : Task<DocumentReference> {
+        val db = FirebaseFirestore.getInstance()
+        val user: MutableMap<String, Any> = HashMap()
+        user["email"] = email
+
+        return db.collection("supervisor").add(user)
     }
 
 }
