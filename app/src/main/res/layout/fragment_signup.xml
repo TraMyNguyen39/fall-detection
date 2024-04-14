@@ -25,11 +25,11 @@
         android:layout_marginStart="@dimen/margin_32"
         android:layout_marginTop="@dimen/margin_48"
         android:layout_marginEnd="32dp"
-        android:hint="@string/txt_login_mobile_username"
+        android:hint="@string/txt_enter_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/label_require_validation"
-        app:startIconDrawable="@drawable/ic_phone">
+        app:startIconDrawable="@drawable/ic_email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_signup_email"
