@@ -8,11 +8,11 @@ import com.google.firebase.firestore.DocumentReference
 
 interface UserRepository {
     fun login(email: String, password: String) : Task<AuthResult>
-
     fun sendVerifyEmail(email: String) : Task<Void>?
     fun signup(email: String, password: String) : Task<AuthResult>
     fun getCurrentAccount() : FirebaseUser?
     fun logout()
+    fun sendPasswordResetEmail(email: String) : Task<Void>?
 
     suspend fun getUserByEmail(email: String) : User?
 

@@ -53,7 +53,7 @@
     <string name="action_logout">Đăng xuất</string>
     <string name="des_ba_icon">Des ba icon</string>
     <string name="asset_statements">statement</string>
-    <string name="txt_require_validate_account">Vui lòng xác thực tài khoản. Hãy kiểm tra email của bạn!</string>
+    <string name="txt_check_your_email">Vui lòng kiểm tra tin nhắn trên tài khoản email của bạn!</string>
     <string name="txt_wrong_username_password">Tài khoản hoặc mật khẩu không chính xác</string>
     <string name="txt_no_internet">Vui lòng kết nối internet</string>
     <string name="txt_error_email_blank">Email không được để trống!</string>

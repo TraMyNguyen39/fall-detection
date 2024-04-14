@@ -24,40 +24,37 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
 
     private val _user = MutableLiveData<User?>()
     val user: LiveData<User?> = _user
-    fun login(email: String, password: String) {
+
+    private val _forgetPassMessage = MutableLiveData<Int?>()
+    val forgetPassMessage: LiveData<Int?> = _forgetPassMessage
+
+    fun login(email: String, password: String, callback: (Int?) -> Unit) {
         repository.login(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 if (repository.getCurrentAccount()?.isEmailVerified == true) {
                     viewModelScope.launch {
                         val user = repository.getUserByEmail(email)
                         _user.postValue(user)
+                        callback(null)
                     }
                 } else {
-                    _loginFormState.postValue(
-                        LoginFormState(errorMessage = R.string.txt_require_validate_account)
-                    )
+                    repository.logout()
+                    callback(R.string.txt_check_your_email)
                 }
             } else {
                 if (task.exception is FirebaseNetworkException) {
-                    _loginFormState.postValue(
-                        LoginFormState(errorMessage = R.string.txt_no_internet)
-                    )
+                    callback(R.string.txt_no_internet)
                 } else {
-                    _loginFormState.postValue(
-                        LoginFormState(errorMessage = R.string.txt_wrong_username_password)
-                    )
+                    callback(R.string.txt_wrong_username_password)
                 }
             }
         }
     }
 
-    fun signup(email: String, password: String, confirmPassword: String, callback: (Boolean) -> Unit) {
+    fun signup(email: String, password: String, confirmPassword: String, callback: (Int?) -> Unit) {
         // check if confirmPassword == password
         if (password != confirmPassword) {
-            _signupFormState.postValue(
-                SignupFormState(errorMessage = R.string.txt_confirm_pass_not_equal_pass)
-            )
-            callback(false)
+            callback(R.string.txt_confirm_pass_not_equal_pass)
             return
         }
 
@@ -72,47 +69,50 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
                             ?.addOnCompleteListener { emailTask ->
                                 if (emailTask.isSuccessful) {
                                     repository.logout()
-                                    callback(true) // Gửi email thành công
+                                    callback(null) // Gửi email thành công
                                 } else {
-                                    _signupFormState.postValue(
-                                        SignupFormState(errorMessage = R.string.txt_cant_send_email)
-                                    )
                                     repository.logout()
-                                    callback(false)
+                                    callback(R.string.txt_cant_send_email)
                                 }
                             }
                     } else {
-                        SignupFormState(errorMessage = R.string.txt_signup_failed)
                         repository.logout()
-                        callback(false)
+                        callback(R.string.txt_signup_failed)
                     }
                 }
             } else {
                 Log.d("TAG", task.exception.toString())
                 when (task.exception) {
                     is FirebaseNetworkException -> {
-                        _signupFormState.postValue(
-                            SignupFormState(errorMessage = R.string.txt_no_internet)
-                        )
+                        callback(R.string.txt_no_internet)
                     }
 
                     is FirebaseAuthUserCollisionException -> {
-                        _signupFormState.postValue(
-                            SignupFormState(errorMessage = R.string.txt_account_is_available)
-                        )
+                        callback(R.string.txt_account_is_available)
                     }
 
                     else -> {
-                        _signupFormState.postValue(
-                            SignupFormState(errorMessage = R.string.txt_signup_failed)
-                        )
+                        callback(R.string.txt_signup_failed)
                     }
                 }
-                callback(false)
             }
         }
     }
 
+    fun sendResetPassword(email: String, callback: (Int) -> Unit) {
+        repository.sendPasswordResetEmail(email)
+            ?.addOnCompleteListener {
+                if (it.isSuccessful) {
+                    callback(R.string.txt_check_your_email)
+                } else {
+                    if (it.exception is FirebaseNetworkException) {
+                        callback(R.string.txt_no_internet)
+                    } else {
+                        callback(R.string.txt_cant_send_email)
+                    }
+                }
+            }
+    }
 
     fun loginFormChange(email: String, password: String) {
         if (email.isBlank()) {
@@ -137,6 +137,16 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
             _signupFormState.postValue(SignupFormState(passwordError = R.string.txt_error_password_format))
         } else {
             _signupFormState.postValue(SignupFormState(isCorrect = true))
+        }
+    }
+
+    fun forgetPasswordFormChange(email: String) {
+        if (email.isBlank()) {
+            _forgetPassMessage.postValue(R.string.txt_error_email_blank)
+        } else if (!isValidEmail(email)) {
+            _forgetPassMessage.postValue(R.string.txt_error_email_invalid)
+        } else {
+            _forgetPassMessage.postValue(null)
         }
     }
 

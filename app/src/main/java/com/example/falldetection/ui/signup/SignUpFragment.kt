@@ -2,7 +2,6 @@ package com.example.falldetection.ui.signup
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,21 +18,15 @@ import com.example.falldetection.databinding.FragmentSignupBinding
 import com.example.falldetection.viewmodel.UserViewModel
 import com.example.falldetection.viewmodel.UserViewModelFactory
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.ActionCodeSettings
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 class SignUpFragment : Fragment() {
 
     private lateinit var binding: FragmentSignupBinding
-
     private lateinit var progressBar: ProgressBar
     private lateinit var containerAuthentication: View
     private lateinit var navController: NavController
     // Check if form is correct formatted
     private var isCorrectForm: Boolean = false
-    private val TAG = "SIGNUP"
 
     private val viewModel: UserViewModel by activityViewModels {
         val userRepository = (requireActivity().application as MyApplication).userRepository
@@ -125,14 +118,13 @@ class SignUpFragment : Fragment() {
 //        }
     }
     private fun signup(email: String, password: String, confirmPassword: String) {
-        val isEmailSentSuccessfully = viewModel.signup(email, password, confirmPassword) {
-            if (it) {
+        viewModel.signup(email, password, confirmPassword) {
+            if (it != null) {
                 Snackbar.make(
                     containerAuthentication,
-                    getString(R.string.txt_require_validate_account),
+                    getString(it),
                     Snackbar.LENGTH_LONG
                 ).show()
-                navController.navigate(SignUpFragmentDirections.actionGlobalLoginFragment())
             }
             progressBar.visibility = View.GONE
         }

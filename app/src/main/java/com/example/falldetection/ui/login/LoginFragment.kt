@@ -105,12 +105,6 @@ class LoginFragment : Fragment() {
             } else if (it.passwordError != null) {
                 isCorrectForm = false
                 binding.editLoginPassword.error = getString(it.passwordError)
-            } else if (it.errorMessage != null) { // Khi dang nhap loi
-                Snackbar.make(
-                    containerAuthentication,
-                    getString(it.errorMessage),
-                    Snackbar.LENGTH_LONG
-                ).show()
             } else {
                 isCorrectForm = true
             }
@@ -122,8 +116,14 @@ class LoginFragment : Fragment() {
     }
 
     private fun login(email: String, password: String) {
-        viewModel.login(email, password)
-        progressBar.visibility = View.GONE
+        viewModel.login(email, password) {
+            if (it != null) {
+                Snackbar.make(
+                    containerAuthentication, getString(it), Snackbar.LENGTH_LONG
+                ).show()
+            }
+            progressBar.visibility = View.GONE
+        }
     }
 
     private fun updateUI(user: User) {

@@ -32,6 +32,11 @@ class UserRepositoryImpl(
     override fun logout() {
         auth.signOut()
     }
+
+    override fun sendPasswordResetEmail(email: String): Task<Void> {
+        return auth.sendPasswordResetEmail(email)
+    }
+
     override suspend fun getUserByEmail(email: String): User? {
         return try {
             val querySnapshot = database.collection("supervisor")
