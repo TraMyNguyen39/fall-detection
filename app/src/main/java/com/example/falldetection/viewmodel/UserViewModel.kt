@@ -69,7 +69,7 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
                             ?.addOnCompleteListener { emailTask ->
                                 if (emailTask.isSuccessful) {
                                     repository.logout()
-                                    callback(null) // Gửi email thành công
+                                    callback(R.string.txt_check_your_email_signup) // Gửi email thành công
                                 } else {
                                     repository.logout()
                                     callback(R.string.txt_cant_send_email)
@@ -103,7 +103,7 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
         repository.sendPasswordResetEmail(email)
             ?.addOnCompleteListener {
                 if (it.isSuccessful) {
-                    callback(R.string.txt_check_your_email)
+                    callback(R.string.txt_check_your_email_forget_pass)
                 } else {
                     if (it.exception is FirebaseNetworkException) {
                         callback(R.string.txt_no_internet)
