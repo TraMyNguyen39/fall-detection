@@ -38,8 +38,11 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
                         callback(null)
                     }
                 } else {
-                    repository.logout()
-                    callback(R.string.txt_check_your_email)
+                    repository.getCurrentAccount()?.sendEmailVerification()
+                        ?.addOnCompleteListener {
+                            logout()
+                            callback(R.string.txt_check_your_email)
+                        }
                 }
             } else {
                 if (task.exception is FirebaseNetworkException) {
@@ -68,15 +71,15 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
                         repository.getCurrentAccount()?.sendEmailVerification()
                             ?.addOnCompleteListener { emailTask ->
                                 if (emailTask.isSuccessful) {
-                                    repository.logout()
-                                    callback(null) // Gửi email thành công
+                                    logout()
+                                    callback(R.string.txt_check_your_email_signup) // Gửi email thành công
                                 } else {
-                                    repository.logout()
+                                    logout()
                                     callback(R.string.txt_cant_send_email)
                                 }
                             }
                     } else {
-                        repository.logout()
+                        logout()
                         callback(R.string.txt_signup_failed)
                     }
                 }
@@ -99,11 +102,16 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
         }
     }
 
+    private fun logout() {
+        _user.postValue(null)
+        repository.logout()
+    }
+
     fun sendResetPassword(email: String, callback: (Int) -> Unit) {
         repository.sendPasswordResetEmail(email)
             ?.addOnCompleteListener {
                 if (it.isSuccessful) {
-                    callback(R.string.txt_check_your_email)
+                    callback(R.string.txt_check_your_email_forget_pass)
                 } else {
                     if (it.exception is FirebaseNetworkException) {
                         callback(R.string.txt_no_internet)

@@ -126,6 +126,11 @@ class SignUpFragment : Fragment() {
                     Snackbar.LENGTH_LONG
                 ).show()
             }
+
+            if (it == R.string.txt_check_your_email_signup) {
+                navController.navigate(SignUpFragmentDirections.actionGlobalLoginFragment())
+            }
+
             progressBar.visibility = View.GONE
         }
     }
