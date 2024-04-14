@@ -21,9 +21,6 @@ import com.example.falldetection.ui.MainActivity
 import com.example.falldetection.viewmodel.UserViewModel
 import com.example.falldetection.viewmodel.UserViewModelFactory
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.FirebaseNetworkException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
@@ -63,15 +60,14 @@ class LoginFragment : Fragment() {
         }
 
         binding.btnSignUp.setOnClickListener {
+            hideKeyBoard()
+
             val action = LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
             navController.navigate(action)
         }
 
         binding.btnSignIn.setOnClickListener {
-            val inputMethodManager =
-                context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            // on below line hiding our keyboard.
-            inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
+            hideKeyBoard()
 
             if (isCorrectForm) {
                 val email = binding.editEmailUsername.text.toString()
@@ -109,12 +105,6 @@ class LoginFragment : Fragment() {
             } else if (it.passwordError != null) {
                 isCorrectForm = false
                 binding.editLoginPassword.error = getString(it.passwordError)
-            } else if (it.errorMessage != null) { // Khi dang nhap loi
-                Snackbar.make(
-                    containerAuthentication,
-                    getString(it.errorMessage),
-                    Snackbar.LENGTH_LONG
-                ).show()
             } else {
                 isCorrectForm = true
             }
@@ -126,12 +116,25 @@ class LoginFragment : Fragment() {
     }
 
     private fun login(email: String, password: String) {
-        viewModel.login(email, password)
-        progressBar.visibility = View.GONE
+        viewModel.login(email, password) {
+            if (it != null) {
+                Snackbar.make(
+                    containerAuthentication, getString(it), Snackbar.LENGTH_LONG
+                ).show()
+            }
+            progressBar.visibility = View.GONE
+        }
     }
 
     private fun updateUI(user: User) {
         val intent = Intent(requireContext(), MainActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun hideKeyBoard() {
+        val inputMethodManager =
+            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        // on below line hiding our keyboard.
+        inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 }

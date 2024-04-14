@@ -23,14 +23,18 @@ class AuthenticationActivity : AppCompatActivity() {
 
         // If user was login, transform to Main
         auth = Firebase.auth
-        if (auth.currentUser != null) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_validation_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (auth.currentUser != null) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
