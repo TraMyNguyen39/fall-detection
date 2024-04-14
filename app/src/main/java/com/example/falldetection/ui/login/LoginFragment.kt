@@ -21,9 +21,6 @@ import com.example.falldetection.ui.MainActivity
 import com.example.falldetection.viewmodel.UserViewModel
 import com.example.falldetection.viewmodel.UserViewModelFactory
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.FirebaseNetworkException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
@@ -63,15 +60,14 @@ class LoginFragment : Fragment() {
         }
 
         binding.btnSignUp.setOnClickListener {
+            hideKeyBoard()
+
             val action = LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
             navController.navigate(action)
         }
 
         binding.btnSignIn.setOnClickListener {
-            val inputMethodManager =
-                context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            // on below line hiding our keyboard.
-            inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
+            hideKeyBoard()
 
             if (isCorrectForm) {
                 val email = binding.editEmailUsername.text.toString()
@@ -133,5 +129,12 @@ class LoginFragment : Fragment() {
     private fun updateUI(user: User) {
         val intent = Intent(requireContext(), MainActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun hideKeyBoard() {
+        val inputMethodManager =
+            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        // on below line hiding our keyboard.
+        inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 }

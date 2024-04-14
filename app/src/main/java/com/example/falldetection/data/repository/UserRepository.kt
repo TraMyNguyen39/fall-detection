@@ -4,6 +4,7 @@ import com.example.falldetection.data.model.User
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.DocumentReference
 
 interface UserRepository {
     fun login(email: String, password: String) : Task<AuthResult>
@@ -14,4 +15,6 @@ interface UserRepository {
     fun logout()
 
     suspend fun getUserByEmail(email: String) : User?
+
+    fun addNewUser(email: String) : Task<DocumentReference>
 }
