@@ -15,6 +15,7 @@ interface UserRepository {
     fun sendPasswordResetEmail(email: String) : Task<Void>?
 
     suspend fun getUserByEmail(email: String) : User?
+    suspend fun getUserById(uid: String, callback: (User?) -> Unit)
 
-    fun addNewUser(email: String) : Task<DocumentReference>
+    fun addNewUser(email: String) : Task<Void>?
 }

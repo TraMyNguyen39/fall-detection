@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.falldetection.R
-import com.example.falldetection.data.model.LoginFormState
-import com.example.falldetection.data.model.SignupFormState
+import com.example.falldetection.ui.login.LoginFormState
+import com.example.falldetection.ui.signup.SignupFormState
 import com.example.falldetection.data.model.User
 import com.example.falldetection.data.repository.UserRepository
 import com.google.firebase.FirebaseNetworkException
@@ -33,9 +33,19 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
             if (task.isSuccessful) {
                 if (repository.getCurrentAccount()?.isEmailVerified == true) {
                     viewModelScope.launch {
-                        val user = repository.getUserByEmail(email)
-                        _user.postValue(user)
-                        callback(null)
+                        val uid = repository.getCurrentAccount()?.uid
+                        if (uid != null) {
+                            repository.getUserById(uid) { user ->
+                                if (user != null) {
+                                    _user.postValue(user)
+                                    callback(null)
+                                } else {
+                                    callback(R.string.txt_account_is_not_available)
+                                }
+                            }
+                        } else {
+                            callback(R.string.txt_account_is_not_available)
+                        }
                     }
                 } else {
                     repository.getCurrentAccount()?.sendEmailVerification()
@@ -65,7 +75,7 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
         repository.signup(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 // create user in firebase store
-                repository.addNewUser(email).addOnCompleteListener { addUserTask ->
+                repository.addNewUser(email)?.addOnCompleteListener { addUserTask ->
                     if (addUserTask.isSuccessful) {
                         // after that, send a verification email for user
                         repository.getCurrentAccount()?.sendEmailVerification()

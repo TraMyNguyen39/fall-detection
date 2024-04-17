@@ -1,4 +1,4 @@
-package com.example.falldetection.data.model
+package com.example.falldetection.ui.signup
 
 import android.view.textclassifier.ConversationActions.Message
 
