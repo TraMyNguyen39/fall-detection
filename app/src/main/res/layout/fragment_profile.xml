@@ -3,6 +3,204 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.profile.ProfileFragment">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView9"
+        android:layout_width="@dimen/card_size_150"
+        android:layout_height="@dimen/card_size_150"
+        android:layout_marginTop="32dp"
+        app:cardCornerRadius="@dimen/card_size_150"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            android:src="@drawable/avatar_4_raster"
+            tools:ignore="ImageContrastCheck" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/text_profile_full_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginEnd="32dp"
+        android:text="Nguyễn Thị Trà My"
+        android:textColor="@color/primary_color"
+        android:textSize="24sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardView9">
+    </TextView>
+
+    <ImageButton
+        android:layout_width="52dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_camera"
+        android:elevation="4dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView9"
+        app:layout_constraintEnd_toEndOf="@+id/cardView9"
+        android:importantForAccessibility="no" />
+
+    <TextView
+        android:id="@+id/label_profile_full_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Họ và tên:"
+        android:textSize="@dimen/text_size_small"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_profile_full_name" />
+
+    <TextView
+        android:id="@+id/label_profile_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Email:"
+        android:textSize="@dimen/text_size_small"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/label_profile_full_name"
+        app:layout_constraintStart_toStartOf="@+id/label_profile_full_name"
+        app:layout_constraintTop_toBottomOf="@+id/label_profile_full_name" />
+
+    <TextView
+        android:id="@+id/label_profile_birth_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Ngày sinh:"
+        android:textSize="@dimen/text_size_small"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline8"
+        app:layout_constraintStart_toStartOf="@+id/label_profile_email"
+        app:layout_constraintTop_toBottomOf="@+id/label_profile_email" />
+
+    <TextView
+        android:id="@+id/label_profile_gender"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Giới tính:"
+        android:textSize="@dimen/text_size_small"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline8"
+        app:layout_constraintStart_toStartOf="@+id/label_profile_birth_date"
+        app:layout_constraintTop_toBottomOf="@+id/label_profile_birth_date" />
+
+    <TextView
+        android:id="@+id/label_profile_phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Điện thoại:"
+        android:textSize="@dimen/text_size_small"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline8"
+        app:layout_constraintStart_toStartOf="@+id/label_profile_gender"
+        app:layout_constraintTop_toBottomOf="@+id/label_profile_gender" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <EditText
+        android:id="@+id/edit_profile_full_name"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Name"
+        app:layout_constraintBottom_toBottomOf="@+id/label_profile_full_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline8"
+        app:layout_constraintTop_toTopOf="@+id/label_profile_full_name" />
+
+    <EditText
+        android:id="@+id/edit_profile_email"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Name"
+        app:layout_constraintBottom_toBottomOf="@+id/label_profile_email"
+        app:layout_constraintEnd_toEndOf="@+id/edit_profile_full_name"
+        app:layout_constraintStart_toStartOf="@+id/edit_profile_full_name"
+        app:layout_constraintTop_toTopOf="@+id/label_profile_email" />
+
+    <Spinner
+        android:id="@+id/spiner_birth_date"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/label_profile_birth_date"
+        app:layout_constraintEnd_toEndOf="@+id/edit_profile_email"
+        app:layout_constraintStart_toStartOf="@+id/edit_profile_email"
+        app:layout_constraintTop_toTopOf="@+id/label_profile_birth_date" />
+
+    <RadioGroup
+        android:id="@+id/radio_group_gender"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/label_profile_gender"
+        app:layout_constraintEnd_toEndOf="@+id/edit_profile_full_name"
+        app:layout_constraintStart_toStartOf="@+id/edit_profile_email"
+        app:layout_constraintTop_toTopOf="@+id/label_profile_gender">
+
+        <RadioButton
+            android:layout_weight="1"
+            android:id="@+id/radio_btn_male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_man" />
+
+        <RadioButton
+            android:layout_weight="1"
+            android:id="@+id/radio_btn_female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_woman" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/edit_profile_phone"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Name"
+        app:layout_constraintBottom_toBottomOf="@+id/label_profile_phone"
+        app:layout_constraintEnd_toEndOf="@+id/spiner_birth_date"
+        app:layout_constraintStart_toStartOf="@+id/spiner_birth_date"
+        app:layout_constraintTop_toTopOf="@+id/label_profile_phone" />
+
+    <Button
+        android:id="@+id/btn_save_change"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Lưu thông tin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_phone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
