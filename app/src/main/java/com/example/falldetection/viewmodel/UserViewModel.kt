@@ -132,6 +132,10 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
             }
     }
 
+    fun getCurrentAccountId() : String? {
+        return repository.getCurrentAccount()?.uid
+    }
+
     fun loginFormChange(email: String, password: String) {
         if (email.isBlank()) {
             _loginFormState.postValue(LoginFormState(emailError = R.string.txt_error_email_blank))

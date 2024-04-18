@@ -39,13 +39,14 @@
     <string name="txt_profile_gender">Giới tính: Nam</string>
     <string name="des_avatar">Avatar image</string>
     <string name="des_btn_more">more dsc</string>
-    <string name="txt_user_email">nguyenvana@gmail.com</string>
-    <string name="txt_user_full_name">Nguyễn Văn A</string>
+    <string name="txt_user_age">Tuổi: %d</string>
+    <string name="txt_user_full_name">Người theo dõi: %s</string>
     <string name="label_new_registration">Đăng ký theo dõi</string>
     <string name="label_pick_your_avatar">Chọn ảnh đại diện</string>
     <string name="action_add">Đăng ký</string>
     <string name="action_clear">Hủy</string>
     <string name="hint_enter_remenber_name">Nhập tên gợi nhớ</string>
+    <string name="hint_enter_remenber_birth_date">Nhập ngày sinh</string>
     <string name="hint_enter_device_code">Nhập mã máy</string>
     <string name="des_avatar_image_picker">Des avatar image picker</string>
     <string name="action_update">Cập nhật</string>
@@ -68,5 +69,9 @@
     <string name="txt_cant_send_email">Có lỗi xảy ra. Không thể gửi email đến bạn!</string>
     <string name="txt_account_is_available">Email đăng ký đã tồn tại. Vui lòng đăng nhập!</string>
     <string name="txt_account_is_not_available">Tài khoản không tồn tại!</string>
+    <string name="txt_unfollow">Hủy theo dõi</string>
+    <string name="txt_watch_statistic">Xem thống kê</string>
+    <string name="txt_man">Nam</string>
+    <string name="txt_woman">Nữ</string>
 </resources>
 

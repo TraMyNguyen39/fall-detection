@@ -17,6 +17,7 @@ import com.example.falldetection.R
 import com.example.falldetection.afterTextChanged
 import com.example.falldetection.data.model.User
 import com.example.falldetection.databinding.FragmentLoginBinding
+import com.example.falldetection.hideKeyBoard
 import com.example.falldetection.ui.MainActivity
 import com.example.falldetection.viewmodel.UserViewModel
 import com.example.falldetection.viewmodel.UserViewModelFactory
@@ -60,14 +61,14 @@ class LoginFragment : Fragment() {
         }
 
         binding.btnSignUp.setOnClickListener {
-            hideKeyBoard()
+            view?.let { view -> hideKeyBoard(view) }
 
             val action = LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
             navController.navigate(action)
         }
 
         binding.btnSignIn.setOnClickListener {
-            hideKeyBoard()
+            view?.let { view -> hideKeyBoard(view) }
 
             if (isCorrectForm) {
                 val email = binding.editEmailUsername.text.toString()
@@ -129,12 +130,5 @@ class LoginFragment : Fragment() {
     private fun updateUI(user: User) {
         val intent = Intent(requireContext(), MainActivity::class.java)
         startActivity(intent)
-    }
-
-    private fun hideKeyBoard() {
-        val inputMethodManager =
-            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        // on below line hiding our keyboard.
-        inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 }

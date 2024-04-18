@@ -43,6 +43,8 @@ android {
 dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
 
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.17")
     implementation("com.github.jakode2020:VerifyCodeEditText:1.2.0")
 

@@ -15,6 +15,7 @@ import com.example.falldetection.MyApplication
 import com.example.falldetection.R
 import com.example.falldetection.afterTextChanged
 import com.example.falldetection.databinding.FragmentForgetPasswordBinding
+import com.example.falldetection.hideKeyBoard
 import com.example.falldetection.ui.signup.SignUpFragmentDirections
 import com.example.falldetection.viewmodel.UserViewModel
 import com.example.falldetection.viewmodel.UserViewModelFactory
@@ -70,7 +71,7 @@ class ForgetPasswordFragment : Fragment() {
         }
 
         binding.btnConfirmPhoneNumber.setOnClickListener {
-            hideKeyBoard()
+            view?.let { view -> hideKeyBoard(view) }
 
             if (isCorrectForm) {
                 val email = binding.editForgetPassEmail.text.toString()
@@ -92,7 +93,8 @@ class ForgetPasswordFragment : Fragment() {
     }
 
     private fun forgetPassword(email: String) {
-        hideKeyBoard()
+        view?.let { view -> hideKeyBoard(view) }
+
         viewModel.sendResetPassword(email) {
             Snackbar.make(
                 containerAuthentication,
@@ -106,12 +108,5 @@ class ForgetPasswordFragment : Fragment() {
 
             progressBar.visibility = View.GONE
         }
-    }
-
-    private fun hideKeyBoard() {
-        val inputMethodManager =
-            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        // on below line hiding our keyboard.
-        inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 }
