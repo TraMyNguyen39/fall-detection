@@ -12,8 +12,7 @@ import kotlinx.coroutines.tasks.await
 
 
 class UserRepositoryImpl(
-    private val auth: FirebaseAuth,
-    private val database: FirebaseFirestore
+    private val auth: FirebaseAuth, private val database: FirebaseFirestore
 ) : UserRepository {
     override fun login(email: String, password: String): Task<AuthResult> {
         return auth.signInWithEmailAndPassword(email, password)
