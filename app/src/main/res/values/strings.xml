@@ -16,7 +16,7 @@
     <string name="txt_someone_has_fallen">Đã phát hiện Trương Thoại Vỹ bị ngã</string>
     <string name="txt_cancel_alert">Tắt thông báo</string>
     <string name="txt_view_detail">Xem thông tin chi tiết</string>
-    <string name="txt_where">Tại: 54 Nguyễn Lương Bằng, Liên Chiểu, Hòa Khánh Bắc, Đà Nẵng</string>
+    <string name="txt_where">Địa chỉ: 54 Nguyễn Lương Bằng, Liên Chiểu, Hòa Khánh Bắc, Đà Nẵng</string>
     <string name="txt_confirm_email">Xác nhận email</string>
     <string name="txt_enter_email">Nhập email</string>
     <string name="txt_forget_password">Quên mật khẩu</string>
@@ -73,5 +73,8 @@
     <string name="txt_watch_statistic">Xem thống kê</string>
     <string name="txt_man">Nam</string>
     <string name="txt_woman">Nữ</string>
+    <string name="txt_time">Thời gian: 20/11/2003</string>
+    <string name="disc_dangerous_image">dangerous image</string>
+    <string name="txt_ong_noi">Ông nội</string>
 </resources>
 
