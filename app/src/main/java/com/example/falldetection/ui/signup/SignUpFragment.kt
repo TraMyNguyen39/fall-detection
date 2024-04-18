@@ -15,6 +15,7 @@ import com.example.falldetection.MyApplication
 import com.example.falldetection.R
 import com.example.falldetection.afterTextChanged
 import com.example.falldetection.databinding.FragmentSignupBinding
+import com.example.falldetection.hideKeyBoard
 import com.example.falldetection.viewmodel.UserViewModel
 import com.example.falldetection.viewmodel.UserViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -25,6 +26,7 @@ class SignUpFragment : Fragment() {
     private lateinit var progressBar: ProgressBar
     private lateinit var containerAuthentication: View
     private lateinit var navController: NavController
+
     // Check if form is correct formatted
     private var isCorrectForm: Boolean = false
 
@@ -74,7 +76,7 @@ class SignUpFragment : Fragment() {
 
     private fun setupActions() {
         binding.btnSignupFragmentSignup.setOnClickListener {
-            hideKeyBoard()
+            view?.let { view -> hideKeyBoard(view) }
 
             if (isCorrectForm) {
                 val email = binding.editSignupEmail.text.toString()
@@ -93,7 +95,7 @@ class SignUpFragment : Fragment() {
         }
 
         binding.btnSignupFragmentLogin.setOnClickListener {
-            hideKeyBoard()
+            view?.let { view -> hideKeyBoard(view) }
             val action = SignUpFragmentDirections.actionGlobalLoginFragment()
             navController.navigate(action)
         }
@@ -117,6 +119,7 @@ class SignUpFragment : Fragment() {
 //            viewModel.signupFormChange(email, password)
 //        }
     }
+
     private fun signup(email: String, password: String, confirmPassword: String) {
         viewModel.signup(email, password, confirmPassword) {
             if (it != null) {
@@ -133,12 +136,5 @@ class SignUpFragment : Fragment() {
 
             progressBar.visibility = View.GONE
         }
-    }
-
-    private fun hideKeyBoard() {
-        val inputMethodManager =
-            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        // on below line hiding our keyboard.
-        inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 }
