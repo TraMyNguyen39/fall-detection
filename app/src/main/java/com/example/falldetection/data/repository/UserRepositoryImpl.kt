@@ -1,98 +1,193 @@
 package com.example.falldetection.data.repository
 
-import android.util.Log
+import com.example.falldetection.R
 import com.example.falldetection.data.model.User
+import com.example.falldetection.data.remote.RemoteDataSource
+import com.example.falldetection.data.remote.ResponseResult
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 
 class UserRepositoryImpl(
-    private val auth: FirebaseAuth, private val database: FirebaseFirestore
-) : UserRepository {
-    override fun login(email: String, password: String): Task<AuthResult> {
-        return auth.signInWithEmailAndPassword(email, password)
+    private val remoteDataSource: RemoteDataSource.UserDataSource
+) : Repository.UserRepository {
+
+    // Các bước: Đăng nhập trên Firebase Authentication
+    // -> Kiểm tra email xác thực chưa? Nếu chưa, gửi lại email
+    // -> Lấy thông tin trên Firestore
+    override suspend fun login(email: String, password: String): ResponseResult<User> {
+        return try {
+            val result = CompletableDeferred<ResponseResult<User>>()
+            remoteDataSource.login(email, password).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    if (remoteDataSource.getCurrentAccount()?.isEmailVerified == true) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val user = remoteDataSource.getUserByEmail(email)
+                            if (user != null) {
+                                result.complete(ResponseResult(true, user, null))
+                            } else {
+                                logout()
+                                result.complete(
+                                    ResponseResult(
+                                        false, null, R.string.txt_account_is_not_available
+                                    )
+                                )
+                            }
+                        }
+                    } else {
+                        remoteDataSource.sendVerifyEmail(email)
+                        logout()
+                        result.complete(
+                            ResponseResult(
+                                false, null, R.string.txt_check_your_email
+                            )
+                        )
+                    }
+                } else {
+                    if (task.exception is FirebaseNetworkException) {
+                        result.complete(ResponseResult(false, null, R.string.txt_no_internet))
+                    } else {
+                        result.complete(
+                            ResponseResult(
+                                false, null, R.string.txt_wrong_username_password
+                            )
+                        )
+                    }
+                }
+            }
+            result.await()
+        } catch (e: Exception) {
+            // Handle the exception here
+            logout()
+            ResponseResult(false, null, R.string.txt_unknown_error)
+        }
     }
 
     override fun sendVerifyEmail(email: String): Task<Void>? {
-        return getCurrentAccount()?.sendEmailVerification()
+        return remoteDataSource.sendVerifyEmail(email)
     }
 
-    override fun signup(email: String, password: String): Task<AuthResult> {
-        return auth.createUserWithEmailAndPassword(email, password)
+    // Các bước: Đăng ký trên Firebase Authentication -> Lưu thông tin trên Firestore -> Gửi email
+    override suspend fun signup(user: User): ResponseResult<Nothing> {
+        return try {
+            val result = CompletableDeferred<ResponseResult<Nothing>>()
+            remoteDataSource.signup(user).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // delete password for security. Then insert to Firestore
+                    user.password = null
+                    remoteDataSource.addNewUserFireStore(user)
+                        ?.addOnCompleteListener { addUserTask ->
+                            if (addUserTask.isSuccessful) {
+                                // after insert into firestore, send a verification email for user
+                                remoteDataSource.getCurrentAccount()?.sendEmailVerification()
+                                    ?.addOnCompleteListener { emailTask ->
+                                        logout()
+                                        if (emailTask.isSuccessful) {
+                                            result.complete(
+                                                ResponseResult(
+                                                    true, null, null
+                                                )
+                                            )
+                                        } else {
+                                            result.complete(
+                                                ResponseResult(
+                                                    false, null, R.string.txt_cant_send_email
+                                                )
+                                            )
+                                        }
+                                    }
+                            } else {
+                                logout()
+                                result.complete(
+                                    ResponseResult(
+                                        false, null, R.string.txt_signup_failed
+                                    )
+                                )
+                            }
+                        }
+                } else {
+                    logout()
+                    when (task.exception) {
+                        is FirebaseNetworkException -> {
+                            result.complete(
+                                ResponseResult(
+                                    false, null, R.string.txt_no_internet
+                                )
+                            )
+                        }
+
+                        is FirebaseAuthUserCollisionException -> {
+                            result.complete(
+                                ResponseResult(
+                                    false, null, R.string.txt_account_is_available
+                                )
+                            )
+                        }
+
+                        else -> {
+                            result.complete(
+                                ResponseResult(
+                                    false, null, R.string.txt_signup_failed
+                                )
+                            )
+                        }
+                    }
+                }
+            }
+            result.await()
+        } catch (e: Exception) {
+            logout()
+            ResponseResult(false, null, R.string.txt_unknown_error)
+        }
     }
 
+    // cần hay không?
     override fun getCurrentAccount(): FirebaseUser? {
-        return auth.currentUser
+        return remoteDataSource.getCurrentAccount()
     }
 
     override fun logout() {
-        auth.signOut()
+        remoteDataSource.logout()
     }
 
-    override fun sendPasswordResetEmail(email: String): Task<Void> {
-        return auth.sendPasswordResetEmail(email)
-    }
-
-    override suspend fun getUserByEmail(email: String): User? {
-        return try {
-            val querySnapshot = database.collection("supervisor").whereEqualTo("email", email).get()
-                .await() // assuming you have imported kotlinx.coroutines.tasks.await
-
-            for (document in querySnapshot.documents) {
-                val user = document.toObject(User::class.java)
-                if (user != null) {
-                    return user
-                }
-            }
-            null // return null if no user found
-        } catch (e: Exception) {
-            println("Error getting user: $e")
-            null
-        }
-    }
-
-    override suspend fun getUserById(uid: String, callback: (User?) -> Unit) {
-        val docRef: DocumentReference = database.collection("supervisor").document(uid)
-        // Truy vấn dữ liệu người dùng
-        docRef.get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val document = task.result
-                if (document.exists()) {
-                    val user = document.toObject(User::class.java)
-                    if (user != null) {
-//                        user.uid = uid
-                        callback(user)
-                    } else {
-                        callback(null)
-                        Log.d("Firestore", "No such document")
-                    }
+    override suspend fun sendPasswordResetEmail(email: String): ResponseResult<Int> {
+        val result = CompletableDeferred<ResponseResult<Int>>()
+        remoteDataSource.sendPasswordResetEmail(email)?.addOnCompleteListener {
+            if (it.isSuccessful) {
+                result.complete(
+                    ResponseResult(true, R.string.txt_check_your_email_forget_pass, null)
+                )
+            } else {
+                if (it.exception is FirebaseNetworkException) {
+                    ResponseResult(false, null, R.string.txt_no_internet)
                 } else {
-                    Log.d("Firestore", "get failed with ", task.exception)
-                    callback(null)
+                    ResponseResult(false, null, R.string.txt_cant_send_email)
                 }
             }
         }
+        return result.await()
     }
 
-    override fun addNewUser(email: String): Task<Void>? {
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
-            val uid = currentUser.uid
-            val docRef = uid.let {
-                database.collection("supervisor").document(it)
-            }
-
-            val user: MutableMap<String, Any?> = HashMap()
-            //  user["name"] = "Tên người dùng"
-            user["email"] = email
-            return docRef.set(user)
-        }
-        return null
+    // cần hay không?
+    override suspend fun getUserByEmail(email: String): User? {
+        return remoteDataSource.getUserByEmail(email)
     }
+//
+//    // cần hay khoong
+//    override suspend fun getUserById(uid: String, callback: (User?) -> Unit) {
+//        return remoteDataSource.getUserById(uid, callback)
+//    }
+
+    // add user cần account?
+//    override fun addNewUser(email: String): Task<Void>? {
+//        return remoteDataSource.addNewUserFireStore(email)
+//    }
 
 }

@@ -1,38 +1,26 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="170dp"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:layout_marginEnd="15dp"
-    android:layout_marginStart="15dp"
-    app:cardCornerRadius="@dimen/card_cornner_radius_8"
-    android:elevation="4dp"
-    app:cardElevation="2dp">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="@dimen/card_corner_radius_10"
+    app:cardElevation="10dp">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/white"
         android:layout_height="match_parent"
-        android:padding="5dp">
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
+        android:background="@color/white"
+        android:padding="8dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
-            android:layout_width="@dimen/card_size_60"
-            android:layout_height="@dimen/card_size_60"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            app:cardCornerRadius="@dimen/card_cornner_radius_60"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="@dimen/card_size_80"
+            android:layout_height="@dimen/card_size_80"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="@dimen/margin_8"
+            app:cardCornerRadius="@dimen/card_size_80"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -47,28 +35,38 @@
 
         <TextView
             android:id="@+id/text_remider_name"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginTop="@dimen/margin_8"
             android:text="@string/txt_user_full_name"
+            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            app:layout_constraintBottom_toTopOf="@+id/guideline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cardView" />
+            android:textSize="@dimen/text_size_lg"
+            app:layout_constraintEnd_toEndOf="@+id/cardView"
+            app:layout_constraintStart_toStartOf="@+id/cardView"
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
         <TextView
             android:id="@+id/text_age"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="3dp"
             android:text="@string/txt_user_age"
-            android:textStyle="italic"
-            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            android:textSize="@dimen/text_size_normal"
             app:layout_constraintEnd_toEndOf="@+id/text_remider_name"
             app:layout_constraintStart_toStartOf="@+id/text_remider_name"
-            app:layout_constraintTop_toTopOf="@+id/guideline" />
+            app:layout_constraintTop_toBottomOf="@+id/text_remider_name" />
+
+        <Button
+            android:id="@+id/btnWatchDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8"
+            android:text="@string/text_watch_detail"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_age" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

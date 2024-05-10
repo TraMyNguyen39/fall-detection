@@ -25,8 +25,8 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="@dimen/login_img_size"
-            android:layout_height="@dimen/login_img_size"
+            android:layout_width="@dimen/img_size_xl"
+            android:layout_height="@dimen/img_size_xl"
             android:layout_marginTop="@dimen/margin_24"
             android:contentDescription="@string/desc_login_image"
             app:layout_constraintEnd_toEndOf="parent"
@@ -35,14 +35,14 @@
             app:srcCompat="@drawable/fall_detection_1" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_input_mobile_username"
+            android:id="@+id/btn_fpass_email"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_32"
             android:layout_marginTop="@dimen/margin_48"
             android:layout_marginEnd="32dp"
-            android:hint="@string/txt_login_mobile_username"
+            android:hint="@string/txt_email"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label_require_validation"
@@ -52,9 +52,9 @@
                 android:id="@+id/edit_email_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:inputType="textVisiblePassword"
                 android:textColorHint="@color/stroke"
-                android:textSize="@dimen/text_size_14sp" />
+                android:textSize="@dimen/text_size_normal" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -64,9 +64,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_24"
             android:hint="@string/txt_password"
-            app:layout_constraintEnd_toEndOf="@+id/text_input_mobile_username"
-            app:layout_constraintStart_toStartOf="@+id/text_input_mobile_username"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_mobile_username"
+            app:layout_constraintEnd_toEndOf="@+id/btn_fpass_email"
+            app:layout_constraintStart_toStartOf="@+id/btn_fpass_email"
+            app:layout_constraintTop_toBottomOf="@+id/btn_fpass_email"
             app:passwordToggleEnabled="true"
             app:startIconDrawable="@drawable/ic_lock">
 
@@ -76,18 +76,19 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:textColorHint="@color/stroke"
-                android:textSize="@dimen/text_size_14sp" />
+                android:textSize="@dimen/text_size_normal" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:paddingLeft="@dimen/padding_btn_30dp"
-            android:paddingRight="@dimen/padding_btn_30dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
             android:id="@+id/btn_forget_password"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_16"
             android:clickable="true"
+            android:background="@android:color/transparent"
             android:focusable="true"
             android:minHeight="48dp"
             android:text="@string/txt_forget_password_ask"
@@ -102,7 +103,7 @@
             android:layout_marginTop="@dimen/margin_16"
             android:backgroundTint="@color/primary_color"
             android:text="@string/txt_sign_in"
-            android:textSize="@dimen/text_size_small"
+            android:textSize="@dimen/text_size_normal"
             app:layout_constraintEnd_toEndOf="@+id/text_input_password"
             app:layout_constraintStart_toStartOf="@+id/text_input_password"
             app:layout_constraintTop_toBottomOf="@+id/btn_forget_password"

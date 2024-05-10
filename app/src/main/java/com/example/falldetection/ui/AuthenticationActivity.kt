@@ -7,9 +7,11 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.falldetection.R
 import com.example.falldetection.databinding.ActivityAuthenticationBinding
+import com.example.falldetection.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 
 class AuthenticationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAuthenticationBinding
@@ -21,20 +23,30 @@ class AuthenticationActivity : AppCompatActivity() {
         binding = ActivityAuthenticationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // If user was login, transform to Main
-        auth = Firebase.auth
+        // Save token
+        retrieveToken();
 
+        // Check if logined
+        if (Utils.getCurrentAccount(this) != null) {
+            directToHome()
+        }
+
+        // If not logined, load nav host
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_validation_fragment) as NavHostFragment
         navController = navHostFragment.navController
-
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (auth.currentUser != null) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+    private fun directToHome() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun retrieveToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Utils.token = task.result
+            }
         }
     }
 }

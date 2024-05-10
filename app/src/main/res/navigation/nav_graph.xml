@@ -5,5 +5,5 @@
     app:startDestination="@id/nav_home">
     <include app:graph="@navigation/nav_home" />
     <include app:graph="@navigation/nav_register" />
-    <include app:graph="@navigation/nav_settings" />
+    <include app:graph="@navigation/nav_profile" />
 </navigation>

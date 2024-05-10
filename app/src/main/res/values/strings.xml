@@ -1,14 +1,14 @@
 <resources>
-    <string name="app_name">FallDetection</string>
+    <string name="app_name">Fall Detection</string>
     <string name="app_name_upper_case">PHÁT HIỆN TÉ NGÃ</string>
     <string name="desc_login_image">Login Image</string>
-    <string name="txt_login_mobile_username">Email hoặc Tên người dùng</string>
+    <string name="txt_email">Email</string>
     <string name="txt_password">Mật khẩu</string>
     <string name="txt_forget_password_ask">Quên mật khẩu?</string>
     <string name="txt_sign_in">Đăng nhập</string>
     <string name="txt_sign_up">Đăng ký</string>
     <string name="txt_dont_have_an_account">Chưa có tài khoản?</string>
-    <string name="txt_have_an_account">Bạn đã có tài khoản?</string>
+    <string name="txt_have_an_account">Đã có tài khoản?</string>
     <string name="txt_sign_up_here">Đăng ký tại đây</string>
     <string name="txt_sign_in_here">Đăng nhập tại đây</string>
     <string name="txt_confirm_password">Xác nhận mật khẩu</string>
@@ -22,12 +22,12 @@
     <string name="txt_forget_password">Quên mật khẩu</string>
     <string name="txt_turn_back">Quay lại</string>
     <string name="txt_confirm_verification_code">Xác nhận mã xác thực</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_home">Trang chủ</string>
     <string name="title_detail">Lịch sử quan sát</string>
     <string name="title_register">Theo dõi</string>
     <string name="title_setting">Cài đặt</string>
+    <string name="title_profile">Tài khoản</string>
     <string name="action_search">Tìm kiếm</string>
     <string name="title_item_sort">Sắp xếp</string>
     <string name="action_item_profile">Tài khoản</string>
@@ -54,12 +54,13 @@
     <string name="action_logout">Đăng xuất</string>
     <string name="des_ba_icon">Des ba icon</string>
     <string name="asset_statements">statement</string>
-    <string name="txt_check_your_email">Đã có thay đổi xảy ra. Vui lòng kiểm tra tin nhắn trên tài khoản email của bạn!</string>
+    <string name="txt_check_your_email">Vui lòng xác thực thông qua tin nhắn đến email của bạn!</string>
     <string name="txt_check_your_email_forget_pass">Vui lòng kiểm tra tin nhắn đến email của bạn để đổi mật khẩu!</string>
     <string name="txt_check_your_email_signup">Đăng ký thành công. Vui lòng kiểm tra tin nhắn đến email của bạn!</string>
     <string name="txt_wrong_username_password">Tài khoản hoặc mật khẩu không chính xác!</string>
     <string name="txt_no_internet">Vui lòng kết nối internet!</string>
     <string name="txt_error_email_blank">Email không được để trống!</string>
+    <string name="txt_error_name_blank">Họ tên không được để trống!</string>
     <string name="txt_error_email_invalid">Email không đúng định dạng!</string>
     <string name="txt_error_password_format">Mật khẩu phải có ít nhất 8 ký tự, gồm ít nhất 1 chữ cái và 1 chữ số!</string>
     <string name="txt_require_enter_info">Vui lòng điền thông tin đầy đủ và đúng định dạng!</string>
@@ -76,5 +77,19 @@
     <string name="txt_time">Thời gian: 20/11/2003</string>
     <string name="disc_dangerous_image">dangerous image</string>
     <string name="txt_ong_noi">Ông nội</string>
+    <string name="text_fall_history">LỊCH SỬ TÉ NGÃ</string>
+    <string name="txt_full_name_example">Họ và tên: %s</string>
+    <string name="text_birthday_example">Ngày sinh: %s</string>
+    <string name="text_watch_detail">Xem chi tiết</string>
+    <string name="txt_enter_phone_number">Nhập số điện thoại</string>
+    <string name="txt_enter_full_name">Nhập họ tên</string>
+    <string name="txt_save_info">Lưu thông tin</string>
+    <string name="default_notification_channel_id">com.example.falldetection.DANGEROUS_NOTIFICATION</string>
+    <string name="msg_permission_denied">Bạn không được phép nhận thông báo từ thiết bị này.</string>
+    <string name="msg_permission_prompt">Bạn cần cấp phép thông báo để thông báo khẩn cấp (nếu có té ngã).</string>
+    <string name="preference_account_key">com.example.falldetection.preferece_account</string>
+    <string name="preference_email_key">com.example.falldetection.preferece_email</string>
+    <string name="preference_display_name_key">com.example.falldetection.preferece_name</string>
+    <string name="txt_unknown_error">Có lỗi xảy ra!</string>
 </resources>
 

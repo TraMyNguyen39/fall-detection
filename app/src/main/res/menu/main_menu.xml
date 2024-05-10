@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_search"
         android:title="@string/action_search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom|collapseActionView" />
     <item
         android:id="@+id/main_menu_item_sort"
         android:icon="@drawable/ic_sort"
@@ -15,7 +15,7 @@
         app:showAsAction="ifRoom|withText" />
     <item
         android:id="@+id/main_menu_item_profile"
-        android:icon="@drawable/ic_account"
-        android:title="@string/action_item_profile"
-        app:showAsAction="ifRoom" />
+        android:icon="@drawable/ic_logout"
+        android:title="@string/action_logout"
+        app:showAsAction="ifRoom|withText" />
 </menu>

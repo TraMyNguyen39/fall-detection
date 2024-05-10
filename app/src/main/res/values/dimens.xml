@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="text_size_14sp">14sp</dimen>
+    <dimen name="text_size_xxl">30sp</dimen>
+    <dimen name="text_size_xl">22sp</dimen>
+    <dimen name="text_size_lg">18sp</dimen>
+    <dimen name="text_size_normal">16sp</dimen>
+
+    <dimen name="margin_4">4dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
     <dimen name="margin_16">16dp</dimen>
     <dimen name="margin_24">24dp</dimen>
     <dimen name="margin_32">32dp</dimen>
     <dimen name="margin_48">48dp</dimen>
     <dimen name="margin_64">64dp</dimen>
-    <dimen name="login_img_size">200dp</dimen>
+
+    <dimen name="img_size_xl">200dp</dimen>
+    <dimen name="img_size_l">150dp</dimen>
+    <dimen name="logo_size_24">24dp</dimen>
+
     <dimen name="alert_size">230dp</dimen>
-    <dimen name="margin_4">4dp</dimen>
-    <dimen name="text_size_normal">24sp</dimen>
-    <dimen name="text_size_small_2">18sp</dimen>
-    <dimen name="text_size_small">16sp</dimen>
-    <dimen name="text_size_30">30sp</dimen>
     <dimen name="padding_btn_30dp">30dp</dimen>
     <dimen name="card_size_60">60dp</dimen>
+    <dimen name="card_size_80">80dp</dimen>
     <dimen name="card_size_150">150dp</dimen>
+    <dimen name="card_size_100">100dp</dimen>
     <dimen name="card_cornner_radius_8">8dp</dimen>
+    <dimen name="card_corner_radius_10">10dp</dimen>
     <dimen name="card_cornner_radius_60">60dp</dimen>
     <dimen name="card_avatar_picker_size">86dp</dimen>
     <dimen name="card_avatar_picker_radius">86dp</dimen>
-    <dimen name="logo_size_24">24dp</dimen>
-    <dimen name="card_corner_radius">8dp</dimen>
-    <dimen name="margin_8">8dp</dimen>
+    <dimen name="space_between_items">20dp</dimen>
 </resources>

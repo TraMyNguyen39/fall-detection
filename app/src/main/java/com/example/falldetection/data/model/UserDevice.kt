@@ -9,7 +9,9 @@ data class UserDevice(
     val userId: String,
     val reminderName: String,
     val birthDate: Date?,
-    val avatarImg: Int?
+    val avatarImg: Int?,
+    var fullName: String? = null
 ) {
-    constructor() : this("", "", "", "", null, R.drawable.avatar_1)
+    constructor() :
+            this("", "", "", "", null, R.drawable.avatar_1)
 }
