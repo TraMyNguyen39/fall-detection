@@ -18,7 +18,11 @@
         android:id="@+id/detail_fragment"
         android:name="com.example.falldetection.ui.detail.DetailFragment"
         android:label="@string/title_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="deviceUserId"
+            app:argType="string" />
+    </fragment>
     <action
         android:id="@+id/action_global_home_fragment"
         app:destination="@id/home_fragment"

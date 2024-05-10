@@ -11,7 +11,7 @@
         android:layout_height="@dimen/alert_size"
         android:layout_marginTop="80dp"
         android:contentDescription="@string/txt_dangerous"
-        android:src="@drawable/alert"
+        android:src="@drawable/dangerous"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

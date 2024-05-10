@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -14,46 +13,51 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.falldetection.MyApplication
 import com.example.falldetection.R
-import com.example.falldetection.afterTextChanged
-import com.example.falldetection.data.model.User
 import com.example.falldetection.databinding.FragmentLoginBinding
-import com.example.falldetection.hideKeyBoard
 import com.example.falldetection.ui.MainActivity
-import com.example.falldetection.viewmodel.UserViewModel
-import com.example.falldetection.viewmodel.UserViewModelFactory
+import com.example.falldetection.utils.Utils
+import com.example.falldetection.utils.Utils.afterTextChanged
 import com.google.android.material.snackbar.Snackbar
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var progressBar: ProgressBar
-    private lateinit var containerAuthentication: View
     private lateinit var navController: NavController
+
     // Check if form is correct formatted
     private var isCorrectForm: Boolean = false
 
-    private val viewModel: UserViewModel by activityViewModels {
+    private val viewModel: LoginViewModel by activityViewModels {
         val userRepository = (requireActivity().application as MyApplication).userRepository
-        UserViewModelFactory(userRepository)
+        LoginViewModelFactory(userRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         navController = findNavController()
     }
-
+    override fun onResume() {
+        super.onResume()
+        isCorrectForm = false
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         progressBar = requireActivity().findViewById(R.id.progress_bar_authen)
-        containerAuthentication = requireActivity().findViewById(R.id.container_authentication)
 
         setupObservers()
         setupActions()
         return binding.root
     }
 
+    override fun onPause() {
+        super.onPause()
+        binding.editEmailUsername.text?.clear()
+        binding.editLoginPassword.text?.clear()
+
+    }
     private fun setupActions() {
         binding.btnForgetPassword.setOnClickListener {
             val action = LoginFragmentDirections.actionLoginFragmentToRequireValidationFragment()
@@ -61,14 +65,14 @@ class LoginFragment : Fragment() {
         }
 
         binding.btnSignUp.setOnClickListener {
-            view?.let { view -> hideKeyBoard(view) }
+            view?.let { view -> Utils.hideKeyBoard(view) }
 
             val action = LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
             navController.navigate(action)
         }
 
         binding.btnSignIn.setOnClickListener {
-            view?.let { view -> hideKeyBoard(view) }
+            view?.let { view -> Utils.hideKeyBoard(view) }
 
             if (isCorrectForm) {
                 val email = binding.editEmailUsername.text.toString()
@@ -78,7 +82,7 @@ class LoginFragment : Fragment() {
                 login(email, password)
             } else {
                 Snackbar.make(
-                    containerAuthentication,
+                    requireView(),
                     getString(R.string.txt_require_enter_info),
                     Snackbar.LENGTH_LONG
                 ).show()
@@ -112,7 +116,20 @@ class LoginFragment : Fragment() {
         }
 
         viewModel.user.observe(viewLifecycleOwner) { user ->
-            user?.let { updateUI(it) }
+            if (user != null) {
+                progressBar.visibility = View.GONE
+                Snackbar.make(
+                    requireView(),
+                    "Bạn ${user.fullName} đã đăng nhập thành công.", Snackbar.LENGTH_LONG
+                ).show()
+
+                // Lưu account vào preference
+                saveToCurrentAccountPreference(user.email, user.fullName)
+                // Sau đó, reset lại user để khi logout từ Activity khác không vào t/h user != null
+                viewModel.resetAccount()
+
+                directToHome()
+            }
         }
     }
 
@@ -120,15 +137,30 @@ class LoginFragment : Fragment() {
         viewModel.login(email, password) {
             if (it != null) {
                 Snackbar.make(
-                    containerAuthentication, getString(it), Snackbar.LENGTH_LONG
+                    requireView(), getString(it), Snackbar.LENGTH_LONG
                 ).show()
             }
             progressBar.visibility = View.GONE
         }
     }
 
-    private fun updateUI(user: User) {
+    private fun directToHome() {
         val intent = Intent(requireContext(), MainActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun saveToCurrentAccountPreference(
+        email: String, displayName: String, imageUrl: String? = null
+    ) {
+        val sharedPref = requireActivity().getSharedPreferences(
+            getString(R.string.preference_account_key), Context.MODE_PRIVATE
+        )
+
+        with(sharedPref.edit()) {
+            putString(getString(R.string.preference_email_key), email)
+            putString(getString(R.string.preference_display_name_key), displayName)
+//            putString(getString(R.string.preference_dislay_name_key), imageUrl)
+            apply()
+        }
     }
 }
