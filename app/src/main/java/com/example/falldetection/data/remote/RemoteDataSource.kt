@@ -1,5 +1,6 @@
 package com.example.falldetection.data.remote
 
+import com.example.falldetection.data.model.FallHistoryItem
 import com.example.falldetection.data.model.User
 import com.example.falldetection.data.model.UserDevice
 import com.google.android.gms.tasks.Task
@@ -21,8 +22,12 @@ interface RemoteDataSource {
         fun addNewUserFireStore(user: User) : Task<Void>?
     }
 
-
     interface UserDeviceDataSource {
         suspend fun getAllPatientOfUser(userEmail: String) : List<UserDevice>
+        suspend fun deleteObserver(userEmail: String, patientEmail: String) : Boolean
+    }
+
+    interface DeviceDataSource {
+        suspend fun getFallHistories(patientEmail: String) : List<FallHistoryItem>
     }
 }
