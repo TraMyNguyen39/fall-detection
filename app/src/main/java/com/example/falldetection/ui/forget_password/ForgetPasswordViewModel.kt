@@ -11,7 +11,7 @@ import com.example.falldetection.utils.Utils
 import kotlinx.coroutines.launch
 
 class ForgetPasswordViewModel (
-  private val repository: Repository.UserRepository
+    private val repository: Repository.UserRepository
 ) : ViewModel() {
     private val _forgetPassFormState = MutableLiveData<Int?>()
     val forgetPassFormState: LiveData<Int?> = _forgetPassFormState
