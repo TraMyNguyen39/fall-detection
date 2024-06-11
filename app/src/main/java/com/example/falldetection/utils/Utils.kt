@@ -17,7 +17,7 @@ import java.util.Date
 
 object Utils {
     var token: String? = null
-
+    var role: Int = Role.SUPERVISOR.ordinal
     fun TextInputEditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
         this.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -48,11 +48,11 @@ object Utils {
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    fun getCurrentAccount(context: Context): String? {
+    fun getCurrentEmail(context: Context): String? {
         val sharedPref = context.getSharedPreferences(
             context.getString(R.string.preference_account_key), Context.MODE_PRIVATE
         )
-        return sharedPref.getString(context.getString(R.string.preference_email_key), null);
+        return sharedPref.getString(context.getString(R.string.preference_email_key), null)
     }
 
     fun isValidPassword(password: String): Boolean {

@@ -8,7 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
+import android.widget.ProgressBar
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -21,28 +21,44 @@ import com.example.falldetection.MyApplication
 import com.example.falldetection.R
 import com.example.falldetection.data.model.UserDevice
 import com.example.falldetection.databinding.FragmentHomeBinding
+import com.example.falldetection.ui.DangerousAlertActivity
+import com.example.falldetection.utils.Role
 import com.example.falldetection.utils.Utils
 import com.google.android.material.snackbar.Snackbar
 
 class HomeFragment : Fragment(), MenuProvider, SwipeRefreshLayout.OnRefreshListener {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var mAdapter: HomeAdapter
-    private val viewModel: UserDevicesViewModel by activityViewModels {
+    private lateinit var progressBar: ProgressBar
+    private val viewModel: TrackedDevicesViewModel by activityViewModels {
         val repository =
             (requireActivity().application as MyApplication).userDeviceRepository
-        TrackedDevicesViewModelFactory(repository)
+        val userRepository =
+            (requireActivity().application as MyApplication).userRepository
+        TrackedDevicesViewModelFactory(repository, userRepository)
     }
+    private var userEmail : String? = null
+    private var isAscending : Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        // Add menu provider
+        progressBar = requireActivity().findViewById(R.id.progress_bar_refresh)
+
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        // get current account
+        userEmail = Utils.getCurrentEmail(requireContext())
 
-        // set up refresh swipe
+        if (userEmail == null)
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        else {
+            progressBar.visibility = View.VISIBLE
+            viewModel.loadUserDevices(userEmail!!)
+        }
+
         binding.swipeLayout.setOnRefreshListener(this)
 
         // set up adapter & observer
@@ -55,11 +71,12 @@ class HomeFragment : Fragment(), MenuProvider, SwipeRefreshLayout.OnRefreshListe
     private fun setUpAdapter() {
         mAdapter = HomeAdapter(arrayListOf(), object : HomeAdapter.OnClickListener {
             override fun onClick(device: UserDevice) {
-                val deviceUserId = device.id
-                val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(deviceUserId)
+                val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+                    patientEmail = device.patientEmail,
+                    reminderName = device.reminderName
+                )
                 findNavController().navigate(action)
             }
-
         })
 
         val layoutManager =
@@ -72,37 +89,38 @@ class HomeFragment : Fragment(), MenuProvider, SwipeRefreshLayout.OnRefreshListe
     @SuppressLint("NotifyDataSetChanged")
     private fun setObserver() {
         viewModel.listDevices.observe(viewLifecycleOwner) {
-            mAdapter.updateList(it)
+            if (it.isEmpty()) {
+                binding.emptyView.root.visibility = View.VISIBLE
+                binding.recyclerUsers.visibility = View.GONE
+            } else {
+                binding.emptyView.root.visibility = View.GONE
+                binding.recyclerUsers.visibility = View.VISIBLE
+                mAdapter.updateList(it)
+            }
+            progressBar.visibility = View.GONE
         }
-
-//        viewModel.device.observe(viewLifecycleOwner) {
-//            if (it != null) {
-//                val deviceUserId = it.id
-//                val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(deviceUserId)
-//                findNavController().navigate(action)
-//            }
-//        }
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.main_menu, menu)
-
-        val searchView = menu.findItem(R.id.main_menu_item_search).actionView as SearchView
-        // Thiết lập màu nền cho vùng nhập liệu
-//        searchView.setBackgroundColor(Color.WHITE)
-
-        // Thiết lập màu của biểu tượng tìm kiếmandroidx.appcompat.R.id.search_mag_icon
-//        val searchIcon = searchView.findViewById(android.R.id) as ImageView
-//        searchIcon.setColorFilter(Color.WHITE)
-
-//        val searchIcon = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_mag_icon)
-//        searchIcon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
-            R.id.main_menu_item_profile -> {
+            R.id.main_menu_item_notification -> {
+                val action = HomeFragmentDirections.actionHomeFragmentToRequestObserverFragment()
+                findNavController().navigate(action)
+                true
+            }
 
+            R.id.main_menu_item_sort -> {
+                isAscending = !isAscending
+                if (isAscending)
+                    menuItem.setIcon(R.drawable.ic_sort)
+                else
+                    menuItem.setIcon(R.drawable.ic_sort_descending)
+
+                mAdapter.sortList(isAscending)
                 true
             }
 
@@ -112,7 +130,7 @@ class HomeFragment : Fragment(), MenuProvider, SwipeRefreshLayout.OnRefreshListe
 
     override fun onRefresh() {
         if (Utils.isOnline(requireContext())) {
-            viewModel.loadUserDevices()
+            viewModel.loadUserDevices(userEmail!!)
         } else {
             Snackbar.make(binding.swipeLayout, R.string.txt_no_internet, Snackbar.LENGTH_LONG)
                 .show()
