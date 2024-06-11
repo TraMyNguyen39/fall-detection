@@ -35,7 +35,7 @@
             android:id="@+id/edit_signup_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textVisiblePassword"
+            android:inputType="text"
             android:textColorHint="@color/stroke"
             android:textSize="@dimen/text_size_normal" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -56,7 +56,7 @@
             android:id="@+id/edit_signup_fullname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textVisiblePassword"
+            android:inputType="text"
             android:textColorHint="@color/stroke"
             android:textSize="@dimen/text_size_normal" />
     </com.google.android.material.textfield.TextInputLayout>

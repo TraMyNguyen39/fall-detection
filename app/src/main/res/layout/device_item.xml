@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="5dp"
     android:elevation="20dp"
     app:cardCornerRadius="@dimen/card_cornner_radius_8"
     app:cardPreventCornerOverlap="false"
@@ -29,30 +29,30 @@
             android:id="@+id/text_dangerouts_remider_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="@dimen/margin_8"
             android:layout_marginEnd="@dimen/margin_8"
             android:text="@string/txt_time"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_normal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView4"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <TextView
-            android:id="@+id/text_dangerouts_remider_address"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="5dp"
-            android:textColor="@color/black"
-            android:text="@string/txt_where"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="@dimen/text_size_normal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/text_dangerouts_remider_time"
-            app:layout_constraintStart_toStartOf="@+id/text_dangerouts_remider_time"
-            app:layout_constraintTop_toBottomOf="@+id/text_dangerouts_remider_time" />
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
+
+<!--<TextView-->
+<!--android:id="@+id/text_dangerouts_remider_address"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginTop="3dp"-->
+<!--android:layout_marginBottom="5dp"-->
+<!--android:textColor="@color/black"-->
+<!--android:text="@string/txt_alert_address"-->
+<!--android:textAppearance="@style/TextAppearance.AppCompat.Body1"-->
+<!--android:textSize="@dimen/text_size_normal"-->
+<!--app:layout_constraintBottom_toBottomOf="parent"-->
+<!--app:layout_constraintEnd_toEndOf="@+id/text_dangerouts_remider_time"-->
+<!--app:layout_constraintStart_toStartOf="@+id/text_dangerouts_remider_time"-->
+<!--app:layout_constraintTop_toBottomOf="@+id/text_dangerouts_remider_time" />-->

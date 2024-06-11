@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingEnd="15dp"
     android:paddingStart="15dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingEnd="15dp"
+    android:paddingTop="8dp"
     tools:context=".ui.profile.ProfileFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView9"
-        android:layout_width="@dimen/card_size_150"
-        android:layout_height="@dimen/card_size_150"
+        android:layout_width="@dimen/img_size_n"
+        android:layout_height="@dimen/img_size_n"
         android:layout_marginTop="@dimen/margin_8"
         app:cardCornerRadius="@dimen/card_size_150"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/iv_profile_avt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:importantForAccessibility="no"
@@ -34,11 +35,11 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="@dimen/margin_8"
         android:layout_marginEnd="32dp"
-        android:text="Nguyễn Thị Trà My"
+        android:text="@string/txt_full_name_example"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="@color/primary_color"
-        android:textSize="22sp"
+        android:textSize="@dimen/text_size_xl"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,19 +48,20 @@
     <ImageButton
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/ic_camera"
-        android:elevation="4dp"
         android:background="@android:color/transparent"
+        android:elevation="4dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_camera"
         app:layout_constraintBottom_toBottomOf="@+id/cardView9"
         app:layout_constraintEnd_toEndOf="@+id/cardView9"
-        android:importantForAccessibility="no" />
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/label_profile_full_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_24"
-        android:text="Họ và tên:"
+        android:text="@string/txt_full_name"
         android:textSize="@dimen/text_size_lg"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guideline8"
@@ -71,7 +73,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Email:"
+        android:text="@string/txt_profile_email"
         android:textSize="@dimen/text_size_lg"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/label_profile_full_name"
@@ -83,7 +85,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Ngày sinh:"
+        android:text="@string/text_birthday"
         android:textSize="@dimen/text_size_lg"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guideline8"
@@ -95,7 +97,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Giới tính:"
+        android:text="@string/txt_gender"
         android:textSize="@dimen/text_size_lg"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guideline8"
@@ -107,7 +109,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Điện thoại:"
+        android:text="@string/text_phone_number"
         android:textSize="@dimen/text_size_lg"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guideline8"
@@ -126,10 +128,11 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
+        android:autofillHints=""
         android:ems="10"
-        android:inputType="text"
         android:hint="@string/txt_enter_full_name"
-        android:text="Nguyễn Thị Trà My"
+        android:inputType="text"
+        android:text="@string/txt_full_name_example"
         app:layout_constraintBottom_toBottomOf="@+id/label_profile_full_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline8"
@@ -137,53 +140,54 @@
 
     <EditText
         android:id="@+id/edit_profile_email"
+        android:inputType="textEmailAddress"
         android:layout_width="0dp"
         android:layout_height="48dp"
+        android:autofillHints=""
         android:ems="10"
-        android:inputType="text"
-        android:hint="@string/txt_enter_email"
-        android:text="tramynguyen19112003@gmail.com"
         android:enabled="false"
+        android:hint="@string/txt_enter_email"
+        android:text="@string/txt_email_example"
         app:layout_constraintBottom_toBottomOf="@+id/label_profile_email"
         app:layout_constraintEnd_toEndOf="@+id/edit_profile_full_name"
         app:layout_constraintStart_toStartOf="@+id/edit_profile_full_name"
         app:layout_constraintTop_toTopOf="@+id/label_profile_email" />
 
     <EditText
-        android:id="@+id/spiner_birth_date"
-        android:text="19/11/2003"
+        android:id="@+id/edit_profile_birth_date"
         android:layout_width="0dp"
         android:layout_height="48dp"
+        android:inputType="date"
+        android:text="@string/text_birthday_example"
         app:layout_constraintBottom_toBottomOf="@+id/label_profile_birth_date"
         app:layout_constraintEnd_toEndOf="@+id/edit_profile_email"
         app:layout_constraintStart_toStartOf="@+id/edit_profile_email"
-        app:layout_constraintTop_toTopOf="@+id/label_profile_birth_date" />
+        app:layout_constraintTop_toTopOf="@+id/label_profile_birth_date"
+        android:importantForAutofill="no" />
 
     <RadioGroup
         android:id="@+id/radio_group_gender"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:weightSum="2"
         android:orientation="horizontal"
+        android:weightSum="2"
         app:layout_constraintBottom_toBottomOf="@+id/label_profile_gender"
         app:layout_constraintEnd_toEndOf="@+id/edit_profile_full_name"
         app:layout_constraintStart_toStartOf="@+id/edit_profile_email"
         app:layout_constraintTop_toTopOf="@+id/label_profile_gender">
 
         <RadioButton
-            android:layout_weight="1"
             android:id="@+id/radio_btn_male"
-            android:textSize="@dimen/text_size_lg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/txt_man" />
 
         <RadioButton
-            android:layout_weight="1"
-            android:textSize="@dimen/text_size_lg"
             android:id="@+id/radio_btn_female"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/txt_woman" />
     </RadioGroup>
 
@@ -192,22 +196,40 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:ems="10"
-        android:inputType="phone"
         android:hint="@string/txt_enter_phone_number"
+        android:inputType="phone"
+        android:textColorHint="#546E7A"
         app:layout_constraintBottom_toBottomOf="@+id/label_profile_phone"
-        app:layout_constraintEnd_toEndOf="@+id/spiner_birth_date"
-        app:layout_constraintStart_toStartOf="@+id/spiner_birth_date"
-        app:layout_constraintTop_toTopOf="@+id/label_profile_phone" />
+        app:layout_constraintEnd_toEndOf="@+id/edit_profile_birth_date"
+        app:layout_constraintStart_toStartOf="@+id/edit_profile_birth_date"
+        app:layout_constraintTop_toTopOf="@+id/label_profile_phone"
+        android:autofillHints="" />
 
     <Button
-        android:id="@+id/btn_save_change"
-        android:layout_width="200dp"
+        android:id="@+id/btn_profile_save_change"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_24"
-        android:textSize="@dimen/text_size_lg"
+        android:paddingLeft="@dimen/padding_btn_30dp"
+        android:paddingRight="@dimen/padding_btn_30dp"
+        android:layout_marginTop="@dimen/margin_16"
         android:text="@string/txt_save_info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_profile_phone" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_phone"
+        tools:ignore="TextContrastCheck" />
+
+    <Button
+        android:id="@+id/btn_profile_register_patient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/padding_btn_30dp"
+        android:paddingRight="@dimen/padding_btn_30dp"
+        android:layout_marginTop="@dimen/margin_8"
+        android:text="@string/txt_register_patient"
+        android:backgroundTint="@color/light_red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_profile_save_change"
+        tools:ignore="TextContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

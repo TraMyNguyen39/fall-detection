@@ -1,10 +1,7 @@
 package com.example.falldetection.ui
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,7 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -30,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var auth: FirebaseAuth
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -48,8 +43,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         askNotificationPermission()
-
-        auth = Firebase.auth
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -72,9 +65,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.main_menu_item_profile) {
-            logout()
-        }
+//        if (item.itemId == R.id.main_menu_item_profile) {
+//            logout()
+//        }
         return super.onOptionsItemSelected(item)
     }
 
@@ -94,7 +87,7 @@ class MainActivity : AppCompatActivity() {
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         } else {
-            Log.e("Notifaction", Build.VERSION.SDK_INT.toString())
+            Log.e("Notification", Build.VERSION.SDK_INT.toString())
         }
     }
 
@@ -120,21 +113,6 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
-    }
-
-    private fun logout() {
-        auth.signOut() // nho chinh
-
-        val sharedPref = getSharedPreferences(
-            getString(R.string.preference_account_key), Context.MODE_PRIVATE
-        )
-
-        sharedPref.edit().apply {
-            clear()
-            apply()
-        }
-
-        onBackPressedDispatcher.onBackPressed()
     }
 
     private fun onDestinationChanged() {

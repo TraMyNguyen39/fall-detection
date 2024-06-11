@@ -1,8 +1,8 @@
 package com.example.falldetection.data.model
 
-data class Device(
-    val id: String,
-    val fullName: String
+data class Device (
+    var patientEmail: String,
+    var deviceCode: String
 ) {
     constructor() : this("", "")
 }

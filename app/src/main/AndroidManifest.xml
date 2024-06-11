@@ -47,7 +47,6 @@
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -61,15 +60,16 @@
             </intent-filter>
         </service>
 
+        <receiver android:name=".CancelActionReceiver" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_message" />
+            android:resource="@drawable/ic_notification" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/primary_color" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id" />
+            android:value="@string/channel_dangerous_id" />
     </application>
 
 </manifest>
