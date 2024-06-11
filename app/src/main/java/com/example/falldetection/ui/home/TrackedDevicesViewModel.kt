@@ -6,40 +6,54 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.falldetection.data.model.UserDevice
-import com.example.falldetection.data.repository.UserDevicesRepository
+import com.example.falldetection.data.repository.Repository
+import com.example.falldetection.utils.Role
+import com.example.falldetection.utils.Utils
 import kotlinx.coroutines.launch
 
-class UserDevicesViewModel(
-    private val repository: UserDevicesRepository
+class TrackedDevicesViewModel(
+    private val repository: Repository.UserDeviceRepository,
+    private val userRepository: Repository.UserRepository
 ) : ViewModel() {
     private val _listDevices = MutableLiveData<List<UserDevice>>()
     val listDevices: LiveData<List<UserDevice>> = _listDevices
 
-//    private val _device = MutableLiveData<UserDevice?>()
-//    val device: LiveData<UserDevice?> = _device
-
-    init {
-        loadUserDevices()
+    private suspend fun loadRole(userEmail: String) {
+        Utils.role = userRepository.getUserByEmail(userEmail)?.role ?: Role.SUPERVISOR.ordinal
     }
-    fun loadUserDevices() {
+
+    fun loadUserDevices(userEmail: String) {
+        val list = arrayListOf<UserDevice>()
         viewModelScope.launch {
-            val list = repository.getAllSupervisedByUser()
+            loadRole(userEmail)
+            // Neu nguoi dung mang thiet bi, them thiet bi vao danh sach
+            if (Utils.role == Role.DEVICE.ordinal) {
+                val currentAccount = UserDevice(
+                    userEmail,
+                    userEmail,
+                    "Bạn",
+                    null,
+                    null,
+                    null
+                )
+                list.add(currentAccount)
+            }
+
+            val listPatient = repository.getAllPatientOfUser(userEmail)
+            list.addAll(listPatient)
             _listDevices.postValue(list)
         }
     }
-
-//    fun updateDeviceDetail(device: UserDevice?) {
-//        _device.postValue(device)
-//    }
 }
 class TrackedDevicesViewModelFactory(
-    private val repository: UserDevicesRepository
+    private val repository: Repository.UserDeviceRepository,
+    private val userRepository: Repository.UserRepository
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(UserDevicesViewModel::class.java)) {
-            return UserDevicesViewModel(repository) as T
+        if (modelClass.isAssignableFrom(TrackedDevicesViewModel::class.java)) {
+            return TrackedDevicesViewModel(repository, userRepository) as T
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
+        throw IllegalArgumentException("Unknown UserDevicesViewModel class")
     }
 }

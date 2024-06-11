@@ -105,8 +105,8 @@ class ForgetPasswordFragment : Fragment() {
 
         binding.editForgetPassEmail.setOnFocusChangeListener { _, hasFocus ->
 //            if (!hasFocus) {
-                val email = binding.editForgetPassEmail.text.toString()
-                viewModel.forgetPasswordFormChange(email)
+            val email = binding.editForgetPassEmail.text.toString()
+            viewModel.forgetPasswordFormChange(email)
 //            }
         }
     }

@@ -1,6 +1,7 @@
 package com.example.falldetection.data.remote
 
 import com.example.falldetection.data.model.User
+import com.example.falldetection.data.model.UserDevice
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
@@ -18,5 +19,10 @@ interface RemoteDataSource {
 //        suspend fun getUserById(uid: String, callback: (User?) -> Unit)
 
         fun addNewUserFireStore(user: User) : Task<Void>?
+    }
+
+
+    interface UserDeviceDataSource {
+        suspend fun getAllPatientOfUser(userEmail: String) : List<UserDevice>
     }
 }

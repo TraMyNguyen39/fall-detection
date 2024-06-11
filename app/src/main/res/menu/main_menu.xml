@@ -14,8 +14,8 @@
         android:title="@string/title_item_sort"
         app:showAsAction="ifRoom|withText" />
     <item
-        android:id="@+id/main_menu_item_profile"
-        android:icon="@drawable/ic_logout"
-        android:title="@string/action_logout"
+        android:id="@+id/main_menu_item_notification"
+        android:icon="@drawable/ic_notifications"
+        android:title="@string/title_notification"
         app:showAsAction="ifRoom|withText" />
 </menu>

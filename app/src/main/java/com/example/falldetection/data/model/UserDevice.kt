@@ -4,14 +4,14 @@ import com.example.falldetection.R
 import java.util.Date
 
 data class UserDevice(
-    var id: String,
-    val deviceId: String,
-    val userId: String,
+//    var id: String,
+    val patientEmail: String,
+    val userEmail: String,
     val reminderName: String,
-    val birthDate: Date?,
-    val avatarImg: Int?,
-    var fullName: String? = null
+    var birthDate: Date? = null,
+    val avatarImg: Int? = null,
+    var fullName: String? = null,
 ) {
     constructor() :
-            this("", "", "", "", null, R.drawable.avatar_1)
+            this("", "", "", null, R.drawable.avatar_1)
 }

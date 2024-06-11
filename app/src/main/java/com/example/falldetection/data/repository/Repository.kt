@@ -1,6 +1,7 @@
 package com.example.falldetection.data.repository
 
 import com.example.falldetection.data.model.User
+import com.example.falldetection.data.model.UserDevice
 import com.example.falldetection.data.remote.ResponseResult
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -17,5 +18,9 @@ interface Repository {
 
         suspend fun getUserByEmail(email: String) : User?
 //        suspend fun getUserById(uid: String, callback: (User?) -> Unit)
+    }
+
+    interface UserDeviceRepository {
+        suspend fun getAllPatientOfUser(userEmail: String) : List<UserDevice>
     }
 }
