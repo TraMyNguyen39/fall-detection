@@ -1,5 +1,6 @@
 package com.example.falldetection.data.repository
 
+import com.example.falldetection.data.model.FallHistoryItem
 import com.example.falldetection.data.model.User
 import com.example.falldetection.data.model.UserDevice
 import com.example.falldetection.data.remote.ResponseResult
@@ -19,8 +20,13 @@ interface Repository {
         suspend fun getUserByEmail(email: String) : User?
 //        suspend fun getUserById(uid: String, callback: (User?) -> Unit)
     }
-
     interface UserDeviceRepository {
         suspend fun getAllPatientOfUser(userEmail: String) : List<UserDevice>
+        suspend fun deleteObserver(userEmail: String, patientEmail: String) : Boolean
     }
+
+    interface DeviceRepository {
+        suspend fun getFallHistories(patientEmail: String) : List<FallHistoryItem>
+    }
+
 }

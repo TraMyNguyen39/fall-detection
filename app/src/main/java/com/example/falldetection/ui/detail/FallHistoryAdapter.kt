@@ -42,8 +42,8 @@ class FallHistoryAdapter(
         private val reminderNameDevice: String) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(fallHistory: FallHistoryItem) {
-            binding.textDangeroutsRemiderTime.text = Utils.dateToTimeString(fallHistory.time)
-            binding.textDangeroutsRemiderAddress.text = fallHistory.address
+            binding.textDangeroutsRemiderTime.text = "Thời gian: " + Utils.dateToTimeString(fallHistory.time)
+//            binding.textDangeroutsRemiderAddress.text = fallHistory.address
         }
     }
 }

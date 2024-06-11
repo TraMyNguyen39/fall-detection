@@ -9,4 +9,7 @@ class UserDevicesRepositoryImpl(
     override suspend fun getAllPatientOfUser(userEmail: String): List<UserDevice> {
         return remoteDataSource.getAllPatientOfUser(userEmail)
     }
+    override suspend fun deleteObserver(userEmail: String, patientEmail: String): Boolean {
+        return remoteDataSource.deleteObserver(userEmail, patientEmail)
+    }
 }

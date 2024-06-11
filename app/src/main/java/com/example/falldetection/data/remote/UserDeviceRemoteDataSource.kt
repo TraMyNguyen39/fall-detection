@@ -35,4 +35,17 @@ class UserDeviceRemoteDataSource(
         }
         return result
     }
+    override suspend fun deleteObserver(userEmail: String, patientEmail: String): Boolean {
+        return try {
+            database
+                .collection("user-device")
+                .document("${userEmail}_${patientEmail}")
+                .delete()
+                .await()
+            true
+        } catch (e: Exception) {
+            println("Error getting user: $e")
+            false
+        }
+    }
 }
