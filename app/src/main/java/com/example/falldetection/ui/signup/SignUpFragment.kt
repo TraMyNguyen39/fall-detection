@@ -57,7 +57,7 @@ class SignUpFragment : Fragment() {
         binding.editSignupEmail.text?.clear()
         binding.editSignupFullname.text?.clear()
         binding.editSignupPassword.text?.clear()
-         binding.editSignupConfirmPassword.text?.clear()
+        binding.editSignupConfirmPassword.text?.clear()
     }
 
     private fun setupObservers() {
