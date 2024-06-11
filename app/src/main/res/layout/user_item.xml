@@ -1,11 +1,12 @@
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="170dp"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="@dimen/card_corner_radius_10"
-    app:cardElevation="10dp">
+    app:cardElevation="20dp"
+    tools:ignore="TextSizeCheck">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -34,7 +35,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/text_remider_name"
+            android:id="@+id/text_reminder_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_8"
@@ -53,15 +54,16 @@
             android:layout_marginTop="3dp"
             android:text="@string/txt_user_age"
             android:textSize="@dimen/text_size_normal"
-            app:layout_constraintEnd_toEndOf="@+id/text_remider_name"
-            app:layout_constraintStart_toStartOf="@+id/text_remider_name"
-            app:layout_constraintTop_toBottomOf="@+id/text_remider_name" />
+            app:layout_constraintEnd_toEndOf="@+id/text_reminder_name"
+            app:layout_constraintStart_toStartOf="@+id/text_reminder_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_reminder_name" />
 
         <Button
             android:id="@+id/btnWatchDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/margin_8"
             android:text="@string/text_watch_detail"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

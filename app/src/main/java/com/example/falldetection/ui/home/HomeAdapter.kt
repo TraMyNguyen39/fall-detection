@@ -12,7 +12,7 @@ import com.example.falldetection.utils.Utils
 
 class HomeAdapter(
     private val listDevices: ArrayList<UserDevice>,
-    private val listener: HomeAdapter.OnClickListener
+    private val listener: OnClickListener
 ) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,16 +36,26 @@ class HomeAdapter(
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun sortList(isAscending: Boolean) {
+        if (isAscending) {
+            listDevices.sortBy { it.reminderName }
+        } else {
+            listDevices.sortByDescending { it.reminderName }
+        }
+        notifyDataSetChanged()
+    }
+
     class ViewHolder(
         private val binding: UserItemBinding,
         private val listener: OnClickListener) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(device: UserDevice) {
-            binding.textRemiderName.text = device.reminderName
+            binding.textReminderName.text = device.reminderName
             binding.textAge.text = if (device.birthDate != null) {
-                "Tuổi: " + Utils.getAge(device.birthDate)
+                "Tuổi: " + Utils.getAge(device.birthDate!!)
             } else {
-                "Tuổi: " + "(Không rõ)"
+                ""
             }
             Glide.with(binding.imgAvatar)
                 .load(device.avatarImg)
