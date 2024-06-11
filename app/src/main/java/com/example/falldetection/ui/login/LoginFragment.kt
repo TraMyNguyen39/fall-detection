@@ -36,10 +36,12 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
         navController = findNavController()
     }
+
     override fun onResume() {
         super.onResume()
         isCorrectForm = false
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,6 +60,7 @@ class LoginFragment : Fragment() {
         binding.editLoginPassword.text?.clear()
 
     }
+
     private fun setupActions() {
         binding.btnForgetPassword.setOnClickListener {
             val action = LoginFragmentDirections.actionLoginFragmentToRequireValidationFragment()
@@ -124,7 +127,10 @@ class LoginFragment : Fragment() {
                 ).show()
 
                 // Lưu account vào preference
-                saveToCurrentAccountPreference(user.email, user.fullName)
+                saveToCurrentAccountPreference(
+                    user.email,
+                    user.fullName
+                )
                 // Sau đó, reset lại user để khi logout từ Activity khác không vào t/h user != null
                 viewModel.resetAccount()
 
@@ -149,9 +155,7 @@ class LoginFragment : Fragment() {
         startActivity(intent)
     }
 
-    private fun saveToCurrentAccountPreference(
-        email: String, displayName: String, imageUrl: String? = null
-    ) {
+    private fun saveToCurrentAccountPreference(email: String, displayName: String) {
         val sharedPref = requireActivity().getSharedPreferences(
             getString(R.string.preference_account_key), Context.MODE_PRIVATE
         )
@@ -159,7 +163,6 @@ class LoginFragment : Fragment() {
         with(sharedPref.edit()) {
             putString(getString(R.string.preference_email_key), email)
             putString(getString(R.string.preference_display_name_key), displayName)
-//            putString(getString(R.string.preference_dislay_name_key), imageUrl)
             apply()
         }
     }
