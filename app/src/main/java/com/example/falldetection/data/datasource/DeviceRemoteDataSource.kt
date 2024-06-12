@@ -1,7 +1,6 @@
-package com.example.falldetection.data.datasource.remote
+package com.example.falldetection.data.datasource
 
 import com.example.falldetection.data.model.FallHistoryItem
-import com.example.falldetection.data.remote.RemoteDataSource
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
