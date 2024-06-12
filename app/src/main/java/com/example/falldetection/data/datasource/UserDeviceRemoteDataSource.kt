@@ -33,6 +33,25 @@ class UserDeviceRemoteDataSource(
         }
         return result
     }
+
+    override suspend fun checkObserver(userEmail: String, patientEmail: String): Boolean {
+        try {
+            val querySnapshot = database
+                .collection("user-device")
+                .whereEqualTo("userEmail", userEmail)
+                .whereEqualTo("patientEmail", patientEmail)
+                .get()
+                .await()
+
+            for (document in querySnapshot.documents) {
+                return true
+            }
+        } catch (e: Exception) {
+            println("Error getting user: $e")
+            return true
+        }
+        return false
+    }
     override suspend fun deleteObserver(userEmail: String, patientEmail: String): Boolean {
         return try {
             database

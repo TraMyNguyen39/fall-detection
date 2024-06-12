@@ -21,8 +21,6 @@ import com.example.falldetection.MyApplication
 import com.example.falldetection.R
 import com.example.falldetection.data.model.UserDevice
 import com.example.falldetection.databinding.FragmentHomeBinding
-import com.example.falldetection.ui.DangerousAlertActivity
-import com.example.falldetection.utils.Role
 import com.example.falldetection.utils.Utils
 import com.google.android.material.snackbar.Snackbar
 
