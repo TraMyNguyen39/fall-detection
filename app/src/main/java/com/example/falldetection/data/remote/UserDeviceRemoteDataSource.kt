@@ -2,7 +2,6 @@ package com.example.falldetection.data.datasource.remote
 
 import com.example.falldetection.data.model.UserDevice
 import com.example.falldetection.data.remote.RemoteDataSource
-import com.example.falldetection.data.remote.UserRemoteDataSource
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
