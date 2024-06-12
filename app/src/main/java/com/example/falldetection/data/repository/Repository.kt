@@ -27,6 +27,7 @@ interface Repository {
     }
     interface UserDeviceRepository {
         suspend fun getAllPatientOfUser(userEmail: String) : List<UserDevice>
+        suspend fun checkObserver(userEmail: String, patientEmail: String): Boolean
         suspend fun deleteObserver(userEmail: String, patientEmail: String) : Boolean
     }
 
