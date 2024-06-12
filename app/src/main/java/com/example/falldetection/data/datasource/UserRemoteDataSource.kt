@@ -1,7 +1,6 @@
-package com.example.falldetection.data.datasource.remote
+package com.example.falldetection.data.datasource
 
 import com.example.falldetection.data.model.User
-import com.example.falldetection.data.remote.RemoteDataSource
 import com.example.falldetection.utils.Role
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
