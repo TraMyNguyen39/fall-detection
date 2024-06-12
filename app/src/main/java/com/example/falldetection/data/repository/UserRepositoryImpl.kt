@@ -1,9 +1,11 @@
 package com.example.falldetection.data.repository
 
+import android.util.Log
 import com.example.falldetection.R
+import com.example.falldetection.data.ResponseResult
 import com.example.falldetection.data.model.User
 import com.example.falldetection.data.remote.RemoteDataSource
-import com.example.falldetection.data.remote.ResponseResult
+import com.example.falldetection.utils.Utils
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -29,8 +31,9 @@ class UserRepositoryImpl(
                 if (task.isSuccessful) {
                     if (remoteDataSource.getCurrentAccount()?.isEmailVerified == true) {
                         CoroutineScope(Dispatchers.IO).launch {
-                            val user = remoteDataSource.getUserByEmail(email)
+                            val user = remoteDataSource.updateTokensAndGetAccount(email, Utils.token!!)
                             if (user != null) {
+                                user.email = email
                                 result.complete(ResponseResult(true, user, null))
                             } else {
                                 logout()
@@ -157,6 +160,14 @@ class UserRepositoryImpl(
         remoteDataSource.logout()
     }
 
+    override fun removeToken(email: String, token: String) {
+        try {
+            remoteDataSource.removeToken(email, Utils.token!!)
+        } catch (e: Exception) {
+            Log.e("removeToken", e.toString())
+        }
+    }
+
     override suspend fun sendPasswordResetEmail(email: String): ResponseResult<Int> {
         val result = CompletableDeferred<ResponseResult<Int>>()
         remoteDataSource.sendPasswordResetEmail(email)?.addOnCompleteListener {
@@ -178,6 +189,39 @@ class UserRepositoryImpl(
     // cần hay không?
     override suspend fun getUserByEmail(email: String): User? {
         return remoteDataSource.getUserByEmail(email)
+    }
+
+    override suspend fun updateUserInfo(user: User): Boolean {
+        return try {
+            remoteDataSource.updateUserInfo(user)!!.await()
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun registerBringDevice(user: User): Boolean {
+        return try {
+            val updateInfo = updateUserInfo(user)
+            if (updateInfo) {
+                remoteDataSource.registerBringDevice(user)!!.await()
+                true
+            } else {
+                false
+            }
+
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun cancelBringDevice(userEmail: String): Boolean {
+        return try {
+            remoteDataSource.cancelBringDevice(userEmail)!!.await()
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 //
 //    // cần hay khoong
