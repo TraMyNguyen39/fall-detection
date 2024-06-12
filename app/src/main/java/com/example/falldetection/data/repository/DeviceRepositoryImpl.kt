@@ -1,7 +1,7 @@
 package com.example.falldetection.data.repository
 
 import com.example.falldetection.data.model.FallHistoryItem
-import com.example.falldetection.data.remote.RemoteDataSource
+import com.example.falldetection.data.datasource.remote.RemoteDataSource
 
 class DeviceRepositoryImpl(
     private val dataSource: RemoteDataSource.DeviceDataSource,

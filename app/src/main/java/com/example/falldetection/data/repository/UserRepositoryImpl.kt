@@ -4,7 +4,7 @@ import android.util.Log
 import com.example.falldetection.R
 import com.example.falldetection.data.ResponseResult
 import com.example.falldetection.data.model.User
-import com.example.falldetection.data.remote.RemoteDataSource
+import com.example.falldetection.data.datasource.remote.RemoteDataSource
 import com.example.falldetection.utils.Utils
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseNetworkException

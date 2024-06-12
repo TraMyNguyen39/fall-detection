@@ -1,6 +1,7 @@
-package com.example.falldetection.data.remote
+package com.example.falldetection.data.datasource.remote
 
 import com.example.falldetection.data.model.FallHistoryItem
+import com.example.falldetection.data.model.ObserverRequest
 import com.example.falldetection.data.model.User
 import com.example.falldetection.data.model.UserDevice
 import com.google.android.gms.tasks.Task
@@ -31,5 +32,9 @@ interface RemoteDataSource {
 
     interface DeviceDataSource {
         suspend fun getFallHistories(patientEmail: String): List<FallHistoryItem>
+    }
+
+    interface ObserverRequestDataSource {
+        suspend fun sendNewRequest(request: ObserverRequest) : String?
     }
 }

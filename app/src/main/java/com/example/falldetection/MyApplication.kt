@@ -1,8 +1,10 @@
 package com.example.falldetection
 
 import android.app.Application
+import com.example.falldetection.data.datasource.remote.DeviceRemoteDataSource
 import com.example.falldetection.data.datasource.remote.UserDeviceRemoteDataSource
-import com.example.falldetection.data.remote.UserRemoteDataSource
+import com.example.falldetection.data.datasource.remote.UserRemoteDataSource
+import com.example.falldetection.data.repository.DeviceRepositoryImpl
 import com.example.falldetection.data.repository.UserDevicesRepositoryImpl
 import com.example.falldetection.data.repository.UserRepositoryImpl
 import com.google.firebase.auth.ktx.auth
@@ -21,8 +23,10 @@ class MyApplication : Application() {
         )
     }
     private val mDeviceRemoteDataSource by lazy { DeviceRemoteDataSource(mDatabase) }
+    private val mObserverRequestRemoteDataSource by lazy { ObserverRequestRemoteDataSource(mDatabase) }
 
     val userRepository by lazy { UserRepositoryImpl(mUserRemoteDataSource) }
     val userDeviceRepository by lazy { UserDevicesRepositoryImpl(mUserDeviceRemoteDataSource) }
     val deviceRepository by lazy { DeviceRepositoryImpl(mDeviceRemoteDataSource) }
+    val observerRequestRepository by lazy { ObserverRequestRepositoryImpl(mObserverRequestRemoteDataSource) }
 }
