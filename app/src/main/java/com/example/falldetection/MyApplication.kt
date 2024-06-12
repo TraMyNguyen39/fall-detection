@@ -4,7 +4,9 @@ import android.app.Application
 import com.example.falldetection.data.datasource.DeviceRemoteDataSource
 import com.example.falldetection.data.datasource.UserDeviceRemoteDataSource
 import com.example.falldetection.data.datasource.UserRemoteDataSource
+import com.example.falldetection.data.datasource.remote.ObserverRequestRemoteDataSource
 import com.example.falldetection.data.repository.DeviceRepositoryImpl
+import com.example.falldetection.data.repository.ObserverRequestRepositoryImpl
 import com.example.falldetection.data.repository.UserDevicesRepositoryImpl
 import com.example.falldetection.data.repository.UserRepositoryImpl
 import com.google.firebase.auth.ktx.auth

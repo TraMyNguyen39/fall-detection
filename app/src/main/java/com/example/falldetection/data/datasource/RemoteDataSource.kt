@@ -36,5 +36,8 @@ interface RemoteDataSource {
 
     interface ObserverRequestDataSource {
         suspend fun sendNewRequest(request: ObserverRequest) : String?
+        suspend fun loadAllRequest(userEmail: String) : List<ObserverRequest>
+        suspend fun acceptRequest(observerRequest: ObserverRequest) : Boolean
+        suspend fun denyRequest(observerRequest: ObserverRequest) : Boolean
     }
 }
