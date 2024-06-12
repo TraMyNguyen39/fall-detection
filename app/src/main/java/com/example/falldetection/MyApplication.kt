@@ -20,6 +20,9 @@ class MyApplication : Application() {
             mUserRemoteDataSource
         )
     }
+    private val mDeviceRemoteDataSource by lazy { DeviceRemoteDataSource(mDatabase) }
+
     val userRepository by lazy { UserRepositoryImpl(mUserRemoteDataSource) }
     val userDeviceRepository by lazy { UserDevicesRepositoryImpl(mUserDeviceRemoteDataSource) }
+    val deviceRepository by lazy { DeviceRepositoryImpl(mDeviceRemoteDataSource) }
 }

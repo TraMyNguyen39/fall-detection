@@ -2,7 +2,6 @@ package com.example.falldetection.data.datasource.remote
 
 import com.example.falldetection.data.model.UserDevice
 import com.example.falldetection.data.remote.RemoteDataSource
-import com.example.falldetection.data.remote.UserRemoteDataSource
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
@@ -34,5 +33,18 @@ class UserDeviceRemoteDataSource(
             println("Error getting user: $e")
         }
         return result
+    }
+    override suspend fun deleteObserver(userEmail: String, patientEmail: String): Boolean {
+        return try {
+            database
+                .collection("user-device")
+                .document("${userEmail}_${patientEmail}")
+                .delete()
+                .await()
+            true
+        } catch (e: Exception) {
+            println("Error getting user: $e")
+            false
+        }
     }
 }

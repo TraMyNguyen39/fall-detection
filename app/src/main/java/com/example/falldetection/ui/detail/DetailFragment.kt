@@ -7,6 +7,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -22,20 +24,35 @@ import com.google.android.material.snackbar.Snackbar
 
 class DetailFragment : Fragment(), MenuProvider, SwipeRefreshLayout.OnRefreshListener {
     private lateinit var binding: FragmentDetailBinding
-    private val args : DetailFragmentArgs by navArgs()
+    private lateinit var progressBar: ProgressBar
+
+    private val args: DetailFragmentArgs by navArgs()
     private lateinit var mAdapter: FallHistoryAdapter
     private val viewModel: DeviceHistoryViewModel by activityViewModels {
-        val repository =
+        val deviceRepository =
             (requireActivity().application as MyApplication).deviceRepository
-        DeviceHistoryViewModelFactory(repository)
+        val userRepository =
+            (requireActivity().application as MyApplication).userRepository
+        val userDeviceRepository =
+            (requireActivity().application as MyApplication).userDeviceRepository
+
+        DeviceHistoryViewModelFactory(deviceRepository, userRepository, userDeviceRepository)
     }
+    private lateinit var reminderName: String
+    private lateinit var patientEmail: String
+    private var userEmail: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
+        progressBar = requireActivity().findViewById(R.id.progress_bar_refresh)
+        progressBar.visibility = View.VISIBLE
 
+        reminderName = args.reminderName
+        patientEmail = args.patientEmail
+        userEmail = Utils.getCurrentEmail(requireContext())
         // Add menu provider
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
@@ -57,8 +74,7 @@ class DetailFragment : Fragment(), MenuProvider, SwipeRefreshLayout.OnRefreshLis
 
     private fun reloadDataView() {
         binding.swipeDetailLayout.isRefreshing = true
-        val deviceUserId = args.deviceUserId // deviceUserId always non null
-        viewModel.loadDeviceInfo(deviceUserId)
+        viewModel.loadDeviceInfo(patientEmail)
         binding.swipeDetailLayout.isRefreshing = false
     }
 
@@ -67,13 +83,41 @@ class DetailFragment : Fragment(), MenuProvider, SwipeRefreshLayout.OnRefreshLis
             val fullName = deviceUser?.fullName ?: ""
             val birthDay = Utils.dateToString(deviceUser?.birthDate) ?: "Không rõ"
 
-            binding.textDetailFullName.text = getString(R.string.txt_full_name_example, fullName)
-            binding.textDetailReminderName.text = deviceUser?.reminderName ?: ""
-            binding.textDetailBirthDate.text = getString(R.string.text_birthday_example, birthDay)
-            if (deviceUser != null) {
-                mAdapter.updateReminderName(deviceUser.reminderName)
-                viewModel.loadFallHistory(deviceUser.deviceId)
+            binding.textDetailFullName.text = fullName
+            binding.textDetailReminderName.text = reminderName
+            binding.textDetailBirthDate.text = birthDay
+            binding.textDetailEmail.text = patientEmail
+
+            binding.btnDeleteObserver.setOnClickListener {
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setTitle("Hủy theo dõi")
+                builder.setMessage("Bạn có chắc chắn muốn hủy theo dõi \"${reminderName}\" không?")
+                builder.setPositiveButton("Có") { dialog, _ ->
+                    viewModel.deleteObserver(userEmail!!, patientEmail) {
+                        if (it) {
+                            Snackbar.make(
+                                requireView(), "Hủy theo dõi thành công", Snackbar.LENGTH_LONG
+                            ).show()
+                            requireActivity().onBackPressedDispatcher.onBackPressed()
+                        } else {
+                            Snackbar.make(
+                                requireView(), R.string.txt_unknown_error, Snackbar.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                    dialog.cancel()
+                }
+                builder.setNegativeButton("Không") { dialog, _ ->
+                    dialog.cancel()
+                }
+                builder.show()
             }
+
+            if (deviceUser != null) {
+                mAdapter.updateReminderName(reminderName)
+                viewModel.loadFallHistory(patientEmail)
+            }
+            progressBar.visibility = View.GONE
         }
 
         viewModel.listFallHistory.observe(viewLifecycleOwner) {
@@ -84,6 +128,7 @@ class DetailFragment : Fragment(), MenuProvider, SwipeRefreshLayout.OnRefreshLis
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
 //        menuInflater.inflate(R.menu.main_menu, menu)
     }
+
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
 //            androidx.appcompat.R.id.home -> {
@@ -102,7 +147,7 @@ class DetailFragment : Fragment(), MenuProvider, SwipeRefreshLayout.OnRefreshLis
         } else {
             Snackbar.make(binding.swipeDetailLayout, R.string.txt_no_internet, Snackbar.LENGTH_LONG)
                 .show()
-            binding.swipeDetailLayout.isRefreshing = false;
+            binding.swipeDetailLayout.isRefreshing = false
         }
     }
 }
