@@ -4,6 +4,7 @@ import com.example.falldetection.data.model.FallHistoryItem
 import com.example.falldetection.data.model.User
 import com.example.falldetection.data.model.UserDevice
 import com.example.falldetection.data.ResponseResult
+import com.example.falldetection.data.model.ObserverRequest
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
 
@@ -32,5 +33,10 @@ interface Repository {
     interface DeviceRepository {
         suspend fun getFallHistories(patientEmail: String) : List<FallHistoryItem>
     }
-
+    interface ObserverRequestRepository {
+        suspend fun sendNewRequest(userEmail: String, patientEmail: String, reminderName: String) : String?
+        suspend fun loadAllRequest(userEmail: String) : List<ObserverRequest>
+        suspend fun acceptRequest(observerRequest: ObserverRequest) : Boolean
+        suspend fun denyRequest(observerRequest: ObserverRequest) : Boolean
+    }
 }
