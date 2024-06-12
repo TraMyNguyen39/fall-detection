@@ -26,8 +26,9 @@ interface RemoteDataSource {
     }
 
     interface UserDeviceDataSource {
-        suspend fun getAllPatientOfUser(userEmail: String): List<UserDevice>
-        suspend fun deleteObserver(userEmail: String, patientEmail: String): Boolean
+        suspend fun getAllPatientOfUser(userEmail: String) : List<UserDevice>
+        suspend fun checkObserver(userEmail: String, patientEmail: String): Boolean
+        suspend fun deleteObserver(userEmail: String, patientEmail: String) : Boolean
     }
 
     interface DeviceDataSource {
