@@ -1,4 +1,4 @@
-package com.example.falldetection.data.datasource.remote
+package com.example.falldetection.data.datasource
 
 import com.example.falldetection.data.model.UserDevice
 import com.google.firebase.firestore.FirebaseFirestore

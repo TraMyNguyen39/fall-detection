@@ -1,9 +1,9 @@
 package com.example.falldetection
 
 import android.app.Application
-import com.example.falldetection.data.datasource.remote.DeviceRemoteDataSource
-import com.example.falldetection.data.datasource.remote.UserDeviceRemoteDataSource
-import com.example.falldetection.data.datasource.remote.UserRemoteDataSource
+import com.example.falldetection.data.datasource.DeviceRemoteDataSource
+import com.example.falldetection.data.datasource.UserDeviceRemoteDataSource
+import com.example.falldetection.data.datasource.UserRemoteDataSource
 import com.example.falldetection.data.repository.DeviceRepositoryImpl
 import com.example.falldetection.data.repository.UserDevicesRepositoryImpl
 import com.example.falldetection.data.repository.UserRepositoryImpl
