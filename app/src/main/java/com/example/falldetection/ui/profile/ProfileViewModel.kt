@@ -18,6 +18,9 @@ class ProfileViewModel(
     private val _profile = MutableLiveData<User?>()
     val profile: LiveData<User?> = _profile
 
+    private val _updateMessage = MutableLiveData<Int?>()
+    val updateMessage: LiveData<Int?> = _updateMessage
+
     private val _profileFormState = MutableLiveData<ProfileFormState>()
     val profileFormState: LiveData<ProfileFormState> = _profileFormState
 
@@ -95,6 +98,19 @@ class ProfileViewModel(
                 _updateOrRegisterPatientMess.postValue(R.string.txt_cancel_patient_success)
             } else {
                 _updateOrRegisterPatientMess.postValue(R.string.txt_unknown_error)
+            }
+        }
+    }
+    fun updateAvatar(
+        email: String,
+        fileName: String
+    ) {
+        viewModelScope.launch {
+            val isSuccessful = repository.updateAvt(email, fileName)
+            if (isSuccessful) {
+                _updateMessage.postValue(R.string.txt_update_avatar_success)
+            } else {
+                _updateMessage.postValue(R.string.txt_unknown_error)
             }
         }
     }

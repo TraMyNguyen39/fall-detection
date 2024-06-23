@@ -21,6 +21,7 @@ interface RemoteDataSource {
         suspend fun getUserByEmail(email: String) : User?
         fun addNewUserFireStore(user: User) : Task<Void>?
         fun updateUserInfo(user: User) : Task<Void>?
+        fun updateAvt(email: String, fileName: String) : Task<Void>?
         fun registerBringDevice(user: User) : Task<Void>?
         fun cancelBringDevice(userEmail: String) : Task<Void>?
     }

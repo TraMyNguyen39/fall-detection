@@ -1,6 +1,7 @@
 package com.example.falldetection.ui.detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -16,11 +17,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.bumptech.glide.Glide
 import com.example.falldetection.MyApplication
 import com.example.falldetection.R
 import com.example.falldetection.databinding.FragmentDetailBinding
 import com.example.falldetection.utils.Utils
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class DetailFragment : Fragment(), MenuProvider, SwipeRefreshLayout.OnRefreshListener {
     private lateinit var binding: FragmentDetailBinding
@@ -87,6 +91,28 @@ class DetailFragment : Fragment(), MenuProvider, SwipeRefreshLayout.OnRefreshLis
             binding.textDetailReminderName.text = reminderName
             binding.textDetailBirthDate.text = birthDay
             binding.textDetailEmail.text = patientEmail
+            if (deviceUser?.avtUrl != null) {
+                val fileName = deviceUser.avtUrl as String
+                val bucketUrl = "gs://falling-detection-3e200.appspot.com/avatars/"
+
+                val storage: FirebaseStorage = FirebaseStorage.getInstance()
+                val storageRef: StorageReference = storage.getReferenceFromUrl(bucketUrl)
+                val imageRef: StorageReference = storageRef.child(fileName)
+                imageRef.downloadUrl.addOnSuccessListener { uri ->
+                    Glide.with(binding.imageAvt).load(uri).error(R.drawable.avatar_1_raster)
+                        .into(binding.imageAvt)
+                }.addOnFailureListener { exception ->
+                    // Xử lý lỗi nếu có
+                    Glide.with(binding.imageAvt).load(R.drawable.avatar_1_raster)
+                        .error(R.drawable.avatar_1_raster)
+                        .into(binding.imageAvt)
+                    Log.e("FirebaseStorage", "Failed to get download URL", exception)
+                }
+            } else {
+                Glide.with(binding.imageAvt)
+                    .load(R.drawable.avatar_1_raster)
+                    .error(R.drawable.avatar_1_raster).into(binding.imageAvt)
+            }
 
             binding.btnDeleteObserver.setOnClickListener {
                 val builder = AlertDialog.Builder(requireContext())

@@ -16,7 +16,7 @@ class ObserverRequestRemoteDataSource(
     private val database: FirebaseFirestore
 ) : RemoteDataSource.ObserverRequestDataSource {
     override suspend fun sendNewRequest(request: ObserverRequest): String? {
-        val baseUrl = "https://addobserverrequest-72zfhbsola-uc.a.run.app"
+        val baseUrl = "https://addobserverrequest-mqxwtm55gq-uc.a.run.app"
         val retrofit = createRetrofitService(baseUrl).create(ObserverRequestService::class.java)
         val result = retrofit.sendObserverRequest(request)
         return if (result.isSuccessful) {

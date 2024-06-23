@@ -9,6 +9,8 @@ import com.example.falldetection.data.model.UserDevice
 import com.example.falldetection.data.repository.Repository
 import com.example.falldetection.utils.Role
 import com.example.falldetection.utils.Utils
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class TrackedDevicesViewModel(
@@ -17,6 +19,10 @@ class TrackedDevicesViewModel(
 ) : ViewModel() {
     private val _listDevices = MutableLiveData<List<UserDevice>>()
     val listDevices: LiveData<List<UserDevice>> = _listDevices
+    private val _searchResults = MutableLiveData<List<UserDevice>>()
+    val searchResults: LiveData<List<UserDevice>> = _searchResults
+
+    private var searchJob: Job? = null
 
     private suspend fun loadRole(userEmail: String) {
         Utils.role = userRepository.getUserByEmail(userEmail)?.role ?: Role.SUPERVISOR.ordinal
@@ -33,7 +39,7 @@ class TrackedDevicesViewModel(
                     userEmail,
                     "Bạn",
                     null,
-                    null,
+                    "IMG_20240519_092706_737.jpg",
                     null
                 )
                 list.add(currentAccount)
@@ -42,6 +48,23 @@ class TrackedDevicesViewModel(
             val listPatient = repository.getAllPatientOfUser(userEmail)
             list.addAll(listPatient)
             _listDevices.postValue(list)
+        }
+    }
+    fun searchDebounced(searchText: String) {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            delay(500) // wait for 500ms of inactivity
+            if (searchText.isBlank()) {
+                _searchResults.postValue(_listDevices.value)
+            } else {
+                val list = ArrayList<UserDevice>()
+                for (item in _listDevices.value!!) {
+                    if (item.reminderName.contains(searchText, ignoreCase = true)) {
+                        list.add(item)
+                    }
+                }
+                _searchResults.postValue(list)
+            }
         }
     }
 }

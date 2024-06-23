@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.falldetection.R
 import com.example.falldetection.data.model.ObserverRequest
 import com.example.falldetection.databinding.RequestObserverItemBinding
 import com.example.falldetection.utils.Utils

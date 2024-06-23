@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -30,6 +31,7 @@ class HomeFragment : Fragment(), MenuProvider, SwipeRefreshLayout.OnRefreshListe
     private lateinit var binding: FragmentHomeBinding
     private lateinit var mAdapter: HomeAdapter
     private lateinit var progressBar: ProgressBar
+    private lateinit var searchView: SearchView
     private val viewModel: TrackedDevicesViewModel by activityViewModels {
         val repository =
             (requireActivity().application as MyApplication).userDeviceRepository
@@ -117,10 +119,21 @@ class HomeFragment : Fragment(), MenuProvider, SwipeRefreshLayout.OnRefreshListe
             }
             progressBar.visibility = View.GONE
         }
+
+        viewModel.searchResults.observe(viewLifecycleOwner) {
+            mAdapter.updateList(it)
+            progressBar.visibility = View.GONE
+            binding.recyclerUsers.visibility = View.VISIBLE
+        }
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.main_menu, menu)
+        searchView = menu.findItem(R.id.main_menu_item_search).actionView as SearchView
+//        // set up view
+//        val layoutParams = searchView.layoutParams
+//        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+//        searchView.layoutParams = layoutParams
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -139,6 +152,26 @@ class HomeFragment : Fragment(), MenuProvider, SwipeRefreshLayout.OnRefreshListe
                     menuItem.setIcon(R.drawable.ic_sort_descending)
 
                 mAdapter.sortList(isAscending)
+                true
+            }
+
+            R.id.main_menu_item_search -> {
+                searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener,
+                    SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        progressBar.visibility = View.VISIBLE
+                        binding.recyclerUsers.visibility = View.INVISIBLE
+                        viewModel.searchDebounced(query)
+                        return false
+                    }
+
+                    override fun onQueryTextChange(newText: String): Boolean {
+                        progressBar.visibility = View.VISIBLE
+                        binding.recyclerUsers.visibility = View.INVISIBLE
+                        viewModel.searchDebounced(newText)
+                        return false
+                    }
+                })
                 true
             }
 

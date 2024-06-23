@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.tasks.await
@@ -106,6 +107,16 @@ class UserRemoteDataSource(
         }
     }
 
+    override fun updateAvt(email: String, fileName: String): Task<Void>? {
+        return try {
+            val docRef = database.collection("user").document(email)
+            docRef.update("avtUrl", fileName)
+        } catch (e: Exception) {
+            println("Error getting user: $e")
+            null
+        }
+    }
+
     override fun registerBringDevice(user: User): Task<Void>? {
         return try {
             val docRef = database.collection("register-patient").document(user.email)
@@ -118,11 +129,13 @@ class UserRemoteDataSource(
 
     override fun cancelBringDevice(userEmail: String): Task<Void>? {
         return try {
-            val docRef = database.collection("user").document(userEmail)
-            docRef.update("role", Role.SUPERVISOR.ordinal)
+            val userDocRef = database.collection("user").document(userEmail)
+            userDocRef.update("role", Role.SUPERVISOR.ordinal)
+            userDocRef.update("deviceID", FieldValue.delete())
         } catch (e: Exception) {
             println("Error getting user: $e")
             null
         }
     }
+
 }

@@ -115,7 +115,7 @@ class MessageService : FirebaseMessagingService() {
             val channel =
                 NotificationChannel(channelId, "Dangerous", NotificationManager.IMPORTANCE_HIGH)
 //            channel.setSound(customSoundUri, audioAttributes)
-            channel.setSound(customSoundUri, audioAttributes)
+//            channel.setSound(customSoundUri, audioAttributes)
             channel.enableLights(true)
             channel.enableVibration(true)
             channel.setSound(customSoundUri, audioAttributes)

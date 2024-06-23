@@ -20,6 +20,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
             android:id="@+id/iv_profile_avt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,16 +47,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardView9" />
 
-    <ImageButton
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@android:color/transparent"
-        android:elevation="4dp"
-        android:importantForAccessibility="no"
-        android:src="@drawable/ic_camera"
+    <androidx.cardview.widget.CardView
+        android:layout_width="31dp"
+        android:layout_height="31dp"
+        android:background="@color/grey"
+        app:cardCornerRadius="@dimen/card_corner_radius_10"
         app:layout_constraintBottom_toBottomOf="@+id/cardView9"
-        app:layout_constraintEnd_toEndOf="@+id/cardView9"
-        tools:ignore="TouchTargetSizeCheck" />
+        app:layout_constraintEnd_toEndOf="@+id/cardView9">
+        <ImageButton
+            android:id="@+id/btn_change_avt"
+            android:layout_gravity="center"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@android:color/transparent"
+            android:elevation="4dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_camera"
+            app:layout_constraintBottom_toBottomOf="@+id/cardView9"
+            app:layout_constraintEnd_toEndOf="@+id/cardView9"
+            tools:ignore="TouchTargetSizeCheck" />
+    </androidx.cardview.widget.CardView>
+
 
     <TextView
         android:id="@+id/label_profile_full_name"

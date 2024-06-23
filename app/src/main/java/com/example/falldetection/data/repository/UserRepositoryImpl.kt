@@ -201,6 +201,15 @@ class UserRepositoryImpl(
         }
     }
 
+    override suspend fun updateAvt(email: String, fileName: String): Boolean {
+        return try {
+            remoteDataSource.updateAvt(email, fileName)?.await()
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
     override suspend fun registerBringDevice(user: User): Boolean {
         return try {
             val updateInfo = updateUserInfo(user)

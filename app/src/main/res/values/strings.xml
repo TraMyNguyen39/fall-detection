@@ -117,5 +117,9 @@
     <string name="txt_deny">Từ chối</string>
     <string name="tilte_request">Yêu cầu theo dõi</string>
     <string name="txt_empty">Danh sách trống</string>
+    <string name="camera_permission_denied">Bạn đã không cho phép ứng dụng truy cập vào thư viện.</string>
+    <string name="gallery_denied">"Bạn được không cho phép ứng dụng truy cập vào thư viện. "</string>
+    <string name="gallery_permission_prompt">Bạn cần cấp quyền truy cập vào thư viện cho ứng dụng.</string>
+    <string name="txt_update_avatar_success">Cập nhật ảnh đại diện thành công.</string>
 </resources>
 

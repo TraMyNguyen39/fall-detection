@@ -24,6 +24,7 @@ class UserDeviceRemoteDataSource(
                     if (patient != null) {
                         device.birthDate = patient.birthDate
                         device.fullName = patient.fullName
+                        device.avatarImg = patient.avtUrl
                     }
                     result.add(it)
                 }

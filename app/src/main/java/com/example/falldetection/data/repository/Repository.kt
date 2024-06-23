@@ -21,6 +21,7 @@ interface Repository {
 
         suspend fun getUserByEmail(email: String) : User?
         suspend fun updateUserInfo(user: User) : Boolean
+        suspend fun updateAvt(email: String, fileName: String) : Boolean
         suspend fun registerBringDevice(user: User) : Boolean
         suspend fun cancelBringDevice(userEmail: String) : Boolean
 
